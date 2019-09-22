@@ -1,6 +1,14 @@
 class Solution:
     def defangIPaddr(self, address: str) -> str:
-        return address.replace(".", "[.]")
+        new_address = ""
+
+        for ch in address:
+            if ch == ".":
+                new_address += "[.]"
+            else:
+                new_address += ch
+        
+        return new_address
 
 s = Solution()
 print(s.defangIPaddr("1.1.1.1"))

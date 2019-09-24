@@ -2,23 +2,22 @@ from typing import *
 
 class Solution:
     def removeOuterParentheses(self, S: str) -> str:
-        level = 0
-        S_new = ""
-        n = len(S)
-        open_idx = 0
+        result = ""
+        stack = []
 
-        for i in range(0, n):
-            if S[i] == "(":
-                if level == 0:
-                    open_idx = i
-                level += 1
+        for ch in S:
+            if ch == "(":
+                stack.append(ch)
+
+                if len(stack) > 1:
+                    result += ch
             else:
-                level -= 1
+                stack.pop()
 
-            if level == 0:
-                S_new += S[open_idx+1:i]
+                if len(stack) > 0:
+                    result += ch
 
-        return S_new
+        return result
 
 s = Solution()
 

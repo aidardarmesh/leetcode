@@ -13,7 +13,7 @@ class Solution:
                 r -= 1
             
             for i in range(0, n):
-                a[i] = 1 - a[i]
+                a[i] ^= 1
         
         return A
 

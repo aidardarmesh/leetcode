@@ -8,12 +8,9 @@ class Solution:
             r = n-1
 
             while l <= r:
-                a[l], a[r] = a[r], a[l]
+                a[l], a[r] = a[r]^1, a[l]^1
                 l += 1
                 r -= 1
-            
-            for i in range(0, n):
-                a[i] ^= 1
         
         return A
 

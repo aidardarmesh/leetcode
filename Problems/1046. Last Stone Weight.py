@@ -1,29 +1,21 @@
 from typing import *
-import heapq
+import heapq as hq
 
 class Solution:
     def lastStoneWeight(self, stones: List[int]) -> int:
         heap = []
 
-        if len(stones) < 2:
-            return stones.pop()
-
-        for stone in stones:
-            heapq.heappush(heap, -stone)
-
-        while len(heap) > 1:
-            stone_larger = -heapq.heappop(heap)
-            stone_smaller = -heapq.heappop(heap)
-
-            stone_reminder = stone_larger - stone_smaller
-
-            if stone_reminder != 0:
-                heapq.heappush(heap, -stone_reminder)
-
-        if heap:
-            return -heapq.heappop(heap)
+        while stones:
+            hq.heappush(heap, -stones.pop())
         
-        return 0
+        while len(heap) >= 2:
+            y = -hq.heappop(heap)
+            x = -hq.heappop(heap)
+
+            if y != x:
+                hq.heappush(heap, x-y)
+        
+        return -hq.heappop(heap) if len(heap) > 0 else 0
 
 s = Solution()
 

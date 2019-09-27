@@ -9,7 +9,8 @@ class Solution:
         for skill in sorted(worker):
             while i < n_diff and skill >= jobs[i][0]:
                 best_profit = max(best_profit, jobs[i][1])
-
+                i += 1
+                
             total_profit += best_profit
 
         return total_profit

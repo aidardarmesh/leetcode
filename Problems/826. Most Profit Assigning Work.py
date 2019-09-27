@@ -2,30 +2,15 @@ from typing import *
 
 class Solution:
     def maxProfitAssignment(self, difficulty: List[int], profit: List[int], worker: List[int]) -> int:
-        total_profit = 0
+        total_profit = i = best_profit = 0
         n_diff = len(difficulty)
-        last_profit = 0
-        max_diff_index = 0
+        jobs = sorted(list(zip(difficulty, profit)))
 
-        # can't use dict, because there can be same difficulty values, but can't in dict
-        # therefore, used sorted list with tuples
-        diff_profits = sorted(list(zip(difficulty, profit)))
+        for skill in sorted(worker):
+            while i < n_diff and skill >= jobs[i][0]:
+                best_profit = max(best_profit, jobs[i][1])
 
-        # if next worker does not ace difficulty, his profit will be same as last one
-        # (only if worker and difficulty lists are sorted)
-        worker = sorted(worker)
-        difficulty = sorted(difficulty)
-
-        for ability in worker:
-            while max_diff_index < n_diff and ability >= difficulty[max_diff_index]:
-                cur_profit = diff_profits[max_diff_index][1]
-
-                if cur_profit > last_profit:
-                    last_profit = cur_profit
-                
-                max_diff_index += 1
-                
-            total_profit += last_profit
+            total_profit += best_profit
 
         return total_profit
 

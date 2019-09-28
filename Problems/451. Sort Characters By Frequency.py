@@ -3,13 +3,7 @@ import heapq, collections
 
 class Solution:
     def frequencySort(self, s: str) -> str:
-        counts = collections.Counter(s)
-        res = ""
-
-        for letter, count in counts.most_common():
-            res += letter*count
-        
-        return res
+        return "".join(letter*count for letter, count in collections.Counter(s).most_common())
 
 s = Solution()
 

@@ -26,11 +26,7 @@ class Solution:
         if l2 != None:
             dummy.next = l2
 
-        # while head.next != None:
-        #     head = head.next
-        #     print(head.val)
-
-        return head
+        return head.next
 
 # [1,2,4]
 nodeA = ListNode(1)

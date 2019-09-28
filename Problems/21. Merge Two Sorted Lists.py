@@ -28,6 +28,11 @@ class Solution:
 
         return head.next
 
+    def print(self, l: ListNode):
+        while l != None:
+            print(l.val, end=" ")
+            l = l.next
+
 # [1,2,4]
 nodeA = ListNode(1)
 nodeB = ListNode(2)
@@ -44,4 +49,4 @@ nodeE.next = nodeF
 
 # [1,1,2,3,4,4]
 s = Solution()
-s.mergeTwoLists(nodeA, nodeD)
+s.print(s.mergeTwoLists(nodeA, nodeD))

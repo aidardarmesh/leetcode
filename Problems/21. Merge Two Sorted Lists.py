@@ -13,12 +13,12 @@ class Solution:
         while l1 != None and l2 != None:
             if l1.val <= l2.val:
                 dummy.next = l1
-                dummy = l1
                 l1 = l1.next
             else:
                 dummy.next = l2
-                dummy = l2
                 l2 = l2.next
+            
+            dummy = dummy.next
 
         if l1 != None:
             dummy.next = l1

@@ -3,16 +3,7 @@ import heapq
 
 class Solution:
     def sortedSquares(self, A: List[int]) -> List[int]:
-        heap = []
-        squares = []
-
-        for a in A:
-            heapq.heappush(heap, a**2)
-        
-        while heap:
-            squares.append(heapq.heappop(heap))
-
-        return squares
+        return sorted([a**2 for a in A])
 
 s = Solution()
 

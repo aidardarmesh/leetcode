@@ -8,20 +8,15 @@ class ListNode:
 
 class Solution:
     def hasCycle(self, head: ListNode) -> bool:
-        cur = head
-        i = 0
+        visited = []
 
-        while cur != None:
-            next_pointer = cur.next
-
-            if cur.val == 999999:
+        while head != None:
+            if head in visited:
                 return True
             else:
-                cur.val = 999999
-                cur.next = i
-
-            cur = next_pointer
-            i += 1
+                visited.append(head)
+            
+            head = head.next
 
         return False
 
@@ -39,7 +34,7 @@ s = Solution()
 
 # print(s.hasCycle(nodeA))
 
-# [1]
+# [1,2]
 nodeA = ListNode(1)
 nodeB = ListNode(2)
 nodeA.next = nodeB

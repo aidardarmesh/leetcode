@@ -8,13 +8,15 @@ class ListNode:
 
 class Solution:
     def removeElements(self, head: ListNode, val: int) -> ListNode:
+        # get head as close to different than val value
+        while head != None and head.val == val:
+            head = head.next
+
         cur = head
 
-        while head != None and cur != None:
-            if head.val == val:
-                head = head.next
-                cur = cur.next
-            elif cur.next != None and cur.next.val == val:
+        # algorithm is similar to removing duplicates problem
+        while cur != None and cur.next != None:
+            if cur.next.val == val:
                 cur.next = cur.next.next
             else:
                 cur = cur.next

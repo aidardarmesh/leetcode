@@ -4,7 +4,7 @@ import heapq, collections
 class Solution:
     def frequencySort(self, s: str) -> str:
         counts = collections.Counter(s)
-        most_frequent_letters = sorted(counts, key=counts.get, reverse=True)
+        most_frequent_letters = heapq.nlargest(len(s), counts.keys(), key=counts.get)
         res = ""
 
         for letter in most_frequent_letters:

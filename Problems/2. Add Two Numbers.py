@@ -12,33 +12,21 @@ class Solution:
         int_ = 0
         sum_ = 0
 
-        while l1 != None and l2 != None:
-            sum_ = l1.val + l2.val + int_
+        while l1 != None or l2 != None:
+            sum_ = int_
+
+            if l1 != None:
+                sum_ += l1.val
+                l1 = l1.next
+            
+            if l2 != None:
+                sum_ += l2.val
+                l2 = l2.next
+                
             rem = sum_ % 10
             int_ = sum_ // 10
             dummy.next = ListNode(rem)
             dummy = dummy.next
-
-            l1 = l1.next
-            l2 = l2.next
-        
-        while l1 != None:
-            sum_ = l1.val + int_
-            rem = sum_ % 10
-            int_ = sum_ // 10
-            dummy.next = ListNode(rem)
-            dummy = dummy.next
-
-            l1 = l1.next
-        
-        while l2 != None:
-            sum_ = l2.val + int_
-            rem = sum_ % 10
-            int_ = sum_ // 10
-            dummy.next = ListNode(rem)
-            dummy = dummy.next
-
-            l2 = l2.next
 
         if int_ != 0:
             dummy.next = ListNode(int_)
@@ -55,13 +43,13 @@ class Solution:
 
 s = Solution()
 
-nodeA_0 = ListNode(0)
+# nodeA_0 = ListNode(0)
 
-nodeB_0 = ListNode(0)
-nodeB_1 = ListNode(1)
-nodeB_0.next = nodeB_1
+# nodeB_0 = ListNode(0)
+# nodeB_1 = ListNode(1)
+# nodeB_0.next = nodeB_1
 
-s.print(s.addTwoNumbers(nodeA_0, nodeB_0))
+# s.print(s.addTwoNumbers(nodeA_0, nodeB_0))
 
 # nodeA_2 = ListNode(2)
 # nodeA_4 = ListNode(4)

@@ -10,20 +10,18 @@ class Solution(object):
         :type head1, head1: ListNode
         :rtype: ListNode
         """
+        seen = set()
         curA = headA
+        curB = headB
 
         while curA != None:
-            # print("curA is", curA.val)
-            curB = headB
-
-            while curB != None:
-                # print("curB is", curB.val)
-                if curA == curB:
-                    return curB
-
-                curB = curB.next
-            
+            seen.add(curA)
             curA = curA.next
+        
+        while curB != None:
+            if curB in seen:
+                return curB
+            curB = curB.next
         
         return None
 

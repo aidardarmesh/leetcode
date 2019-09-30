@@ -13,23 +13,21 @@ class Solution(object):
         :type n: int
         :rtype: ListNode
         """
-        slow = fast = head
+        dummy = ListNode(-1)
+        dummy.next = fast = head
+        head = dummy
 
         while n > 0:
             fast = fast.next
             n -= 1
-
-        if fast == None:
-            head = head.next
-            return head
         
-        while fast.next != None:
+        while fast != None:
             fast = fast.next
-            slow = slow.next
+            dummy = dummy.next
         
-        slow.next = slow.next.next
+        dummy.next = dummy.next.next
 
-        return head
+        return head.next
 
     def print(self, head):
         while head != None:
@@ -50,4 +48,4 @@ node2.next = node3
 node3.next = node4
 node4.next = node5
 
-s.print(s.removeNthFromEnd(node1, 5))
+s.print(s.removeNthFromEnd(node1, 1))

@@ -14,22 +14,24 @@ class Solution:
 
         result = []
         queue = []
-        queue.append((root, 0))
+        queue.append(root)
 
         while queue:
-            node, level = queue.pop(0)
+            level, size = [], len(queue)
+
+            for i in range(size):
+                node = queue.pop(0)
+
+                if node.left:
+                    queue.append(node.left)
+                
+                if node.right:
+                    queue.append(node.right)
+                
+                level.append(node.val)
             
-            if node.left:
-                queue.append((node.left, level+1))
-            
-            if node.right:
-                queue.append((node.right, level+1))
-            
-            if level < len(result):
-                result[level].append(node.val)
-            else:
-                result.append([node.val])
-        
+            result.append(level)
+
         return result
 
 s = Solution()

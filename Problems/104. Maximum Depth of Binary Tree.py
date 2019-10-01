@@ -8,14 +8,18 @@ class TreeNode:
         self.right = None
 
 class Solution:
-    def maxDepth(self, root: TreeNode) -> int:
-        if not root:
-            return 0
-        
-        left_depth = self.maxDepth(root.left)
-        right_depth = self.maxDepth(root.right)
+    def __init__(self):
+        self.depth = 0
 
-        return max(left_depth, right_depth) + 1
+    def maxDepth(self, root: TreeNode, depth: int) -> int:
+        if not root.left and not root.right:
+            self.depth = max(self.depth, depth)
+
+        if root.left:
+            self.maxDepth(root.left, depth + 1)
+
+        if root.right:
+            self.maxDepth(root.right, depth + 1)
 
 s = Solution()
 
@@ -29,4 +33,5 @@ node3.right = node20
 node20.left = node15
 node20.right = node7
 
-print(s.maxDepth(node3))
+s.maxDepth(node3, 1)
+print(s.depth)

@@ -5,22 +5,15 @@ class Solution:
         res = []
 
         for numb in range(left, right+1):
-            digits = []
-            numb_copy = numb
-
-            while numb_copy > 0:
-                numb_copy, digit = divmod(numb_copy, 10)
-                digits.append(digit)
-
             self_dividing = True
-            
-            for digit in digits:
-                if digit == 0 or numb % digit != 0:
+
+            for digit in str(numb):
+                if digit == '0' or numb % int(digit) != 0:
                     self_dividing = False
             
             if self_dividing:
                 res.append(numb)
-        
+                    
         return res
 
 s = Solution()

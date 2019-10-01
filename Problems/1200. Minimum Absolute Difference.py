@@ -9,12 +9,14 @@ class Solution:
 
         for i in range(0, n-1):
             delta = arr[i+1] - arr[i]
-            min_delta = min(min_delta, delta)
-        
-        for i in range(0, n-1):
-            if arr[i+1] - arr[i] == min_delta:
+
+            if delta < min_delta:
+                result = []
+                min_delta = delta
+
+            if delta == min_delta:
                 result.append([arr[i], arr[i+1]])
-        
+
         return result
 
 s = Solution()

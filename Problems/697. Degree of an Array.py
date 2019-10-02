@@ -3,21 +3,19 @@ import collections
 
 class Solution:
     def findShortestSubArray(self, nums: List[int]) -> int:
-        num_indices = {}
-        n = len(nums)
+        first, count, degree, res = {}, {}, 0, 0
 
-        for i in range(n):
-            if not nums[i] in num_indices:
-                num_indices[nums[i]] = []
-            
-            num_indices[nums[i]].append(i)
-        
-        degree = max([len(indices) for indices in num_indices.values()])
+        for i, num in enumerate(nums):
+            first.setdefault(num, i)
+            count[num] = count.get(num, 0) + 1
 
-        if degree == 1:
-            return 1
-        
-        return min([indices.pop() - indices.pop(0) + 1 if len(indices) == degree else 999999 for indices in num_indices.values()])
+            if count[num] > degree:
+                degree = count[num]
+                res = i - first[num] + 1
+            elif count[num] == degree:
+                res = min(res, i - first[num] + 1)
+
+        return res
 
 s = Solution()
 

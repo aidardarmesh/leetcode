@@ -2,18 +2,15 @@ from typing import *
 
 class Solution:
     def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
-        first, contains = {}, False
+        last = {}
 
         for i, num in enumerate(nums):
-            if num in first:
-                if i - first[num] > k:
-                    first[num] = i
-                else:
-                    contains = True
-            else:
-                first[num] = i
+            if num in last and i - last[num] <= k:
+                return True
+
+            last[num] = i
         
-        return contains
+        return False
 
 s = Solution()
 

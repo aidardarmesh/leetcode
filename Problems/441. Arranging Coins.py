@@ -1,16 +1,9 @@
 from typing import *
+import math
 
 class Solution:
     def arrangeCoins(self, n: int) -> int:
-        i = 1
-        rows = 0
-
-        while n >= i:
-            rows += 1
-            n -= i
-            i += 1
-        
-        return rows
+        return math.floor(-0.5 + math.sqrt(2 * n + 0.25));
 
 s = Solution()
 

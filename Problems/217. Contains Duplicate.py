@@ -2,7 +2,15 @@ from typing import *
 
 class Solution:
     def containsDuplicate(self, nums: List[int]) -> bool:
-        return not len(nums) == len(set(nums))
+        uniques = set()
+
+        for num in nums:
+            if num in uniques:
+                return True
+            else:
+                uniques.add(num)
+        
+        return False
 
 s = Solution()
 

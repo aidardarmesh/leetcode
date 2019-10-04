@@ -6,11 +6,8 @@ class Solution:
 
         for i in range(len(nums)):
             if nums[i] != 0:
-                nums[last_non_zero_index] = nums[i]
+                nums[last_non_zero_index], nums[i] = nums[i], nums[last_non_zero_index]
                 last_non_zero_index += 1
-        
-        for i in range(last_non_zero_index, len(nums)):
-            nums[i] = 0
 
 a = [0,0,1]
 

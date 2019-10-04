@@ -3,17 +3,20 @@ import re
 
 class Solution:
     def isPalindrome(self, s: str) -> bool:
-        s = s.lower()
-        stack, queue = [], []
+        l, r = 0, len(s)-1
 
-        for ch in s:
-            if ('a' <= ch and ch <= 'z') or ('0' <= ch and ch <= '9'):
-                stack.append(ch)
-                queue.append(ch)
-        
-        while stack:
-            if stack.pop() != queue.pop(0):
+        while l <= r:
+            while l < r and not s[l].isalnum():
+                l += 1
+            
+            while l < r and not s[r].isalnum():
+                r -= 1
+
+            if s[l].lower() != s[r].lower():
                 return False
+
+            l += 1
+            r -= 1
         
         return True
 

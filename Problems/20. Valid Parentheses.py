@@ -8,16 +8,13 @@ class Solution:
         for p in s:
             if p in parens.keys():
                 open_p.append(p)
-            else:
-                if len(open_p) > 0 and p == parens[open_p.pop()]:
-                    continue
-                else:
+            elif p in parens.values():
+                if len(open_p) == 0 or p != parens[open_p.pop()]:
                     return False
-                    
-        if len(open_p) != 0:
-            return False
+            else:
+                return False
         
-        return True
+        return open_p == []
 
 s = Solution()
 

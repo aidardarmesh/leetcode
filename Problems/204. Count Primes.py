@@ -3,22 +3,25 @@ import math
 
 class Solution:
     def countPrimes(self, n: int) -> int:
-        primes = set()
-
-        for i in range(2, n):
-            is_prime = True
-
-            for divisor in primes:
-                if i % divisor == 0:
-                    is_prime = False
-                    break
-            
-            if is_prime:
-                primes.add(i)
+        if n <= 0:
+            return 0
         
-        return len(primes)
+        primes = [True] * n
+        primes[0] = primes[1] = False
+        i = 2
+
+        while i*i < n:
+            if not primes[i]:
+                i += 1
+                continue
+            
+            primes[i*i:n:i] = [False] * len(primes[i*i:n:i])
+            i += 1
+        
+        return sum(primes)
 
 s = Solution()
 
 assert s.countPrimes(10) == 4
 assert s.countPrimes(14) == 6
+assert s.countPrimes(10000) == 1229

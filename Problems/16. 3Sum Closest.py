@@ -19,16 +19,18 @@ class Solution:
                     min_diff = mod
                     closest_sum = sum3
 
-                if sum3 <= target:
+                if sum3 < target:
                     while l < r and nums[l] == nums[l+1]:
                         l += 1
 
                     l += 1
-                else:
+                elif sum3 > target:
                     while l < r and nums[r-1] == nums[r]:
                         r -= 1
 
                     r -= 1
+                else:
+                    return sum3
         
         return closest_sum
 

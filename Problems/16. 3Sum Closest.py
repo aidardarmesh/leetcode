@@ -8,6 +8,9 @@ class Solution:
         closest_sum = 999999
 
         for i in range(n-2):
+            if i > 0 and nums[i] == nums[i-1]:
+                continue
+            
             l = i + 1
             r = n - 1
             

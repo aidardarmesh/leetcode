@@ -2,9 +2,6 @@ from typing import *
 
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
-        if len(nums) == 1 and nums[0] == k:
-            return 1
-        
         n, counter = len(nums), 0
         prefix = [nums[0]]
 

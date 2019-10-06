@@ -5,17 +5,15 @@ class Solution:
         uniques = []
 
         for email in emails:
-            local = ""
             at_index = email.find("@")
             domain = email[at_index+1:]
+            local = email[:at_index]
+            plus_index = local.find("+")
+            
+            if plus_index > -1:
+                local = local[:plus_index]
 
-            for i in range(at_index):
-                if email[i] == ".":
-                    continue
-                elif email[i] == "+":
-                    break
-                else:
-                    local += email[i]
+            local = local.replace(".", "")
             
             new_email = local+"@"+domain
             

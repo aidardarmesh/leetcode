@@ -21,3 +21,4 @@ class Solution:
 s = Solution()
 
 assert s.subarraySum([1,1,1], 2) == 2
+assert s.subarraySum([1,2,3,4,5,6,7,1,23,21,3,1,2,1,1,1,1,1,12,2,3,2,3,2,2]) == 5

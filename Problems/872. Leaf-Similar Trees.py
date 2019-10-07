@@ -8,22 +8,27 @@ class TreeNode:
         self.right = None
 
 class Solution:
-    def appendLeaves(self, root: TreeNode, leaves: List[int]) -> List[int]:
-        if not root.left and not root.right:
-            leaves.append(root.val)
+    def getLeaves(self, root: TreeNode) -> List[int]:
+        leaves = []
+        stack = []
+        node = root
 
-        if root.left:
-            self.appendLeaves(root.left, leaves)
+        while stack or node:
+            if node:
+                stack.append(node)
+                node = node.left
+            elif stack:
+                node = stack.pop()
+                
+                if not node.left and not node.right:
+                    leaves.append(node.val)
+                
+                node = node.right
         
-        if root.right:
-            self.appendLeaves(root.right, leaves)
+        return leaves
 
     def leafSimilar(self, root1: TreeNode, root2: TreeNode) -> bool:
-        l1, l2 = [], []
-        self.appendLeaves(root1, l1)
-        self.appendLeaves(root2, l2)
-
-        return l1 == l2
+        return self.getLeaves(root1) == self.getLeaves(root2)
 
 s = Solution()
 

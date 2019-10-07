@@ -6,10 +6,7 @@ class Solution:
 
         for i in range(n):
             sum += nums[i]
-
-            if sum-k in freq:
-                count += freq[sum-k]
-            
+            count += freq.get(sum-k, 0)
             freq[sum] = freq.get(sum, 0) + 1
         
         return count

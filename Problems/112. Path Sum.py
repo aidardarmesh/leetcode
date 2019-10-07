@@ -11,13 +11,25 @@ class Solution:
     def hasPathSum(self, root: TreeNode, sum: int) -> bool:
         if not root:
             return False
+        
+        stack = []
+        stack.append((root, sum))
+        res = False
 
-        sum -= root.val
+        while stack:
+            node, sum = stack.pop()
+            sum -= node.val
+
+            if not node.left and not node.right:
+                res = res or sum == 0
+            
+            if node.right:
+                stack.append((node.right, sum))
+
+            if node.left:
+                stack.append((node.left, sum))
         
-        if not root.left and not root.right:
-            return sum == 0
-        
-        return self.hasPathSum(root.left, sum) or self.hasPathSum(root.right, sum)
+        return res
 
 s = Solution()
 

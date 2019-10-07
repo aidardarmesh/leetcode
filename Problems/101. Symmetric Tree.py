@@ -8,41 +8,17 @@ class TreeNode:
         self.right = None
 
 class Solution:
-    def isSymmetric(self, root: TreeNode) -> bool:
-        if not root:
+    def isMirror(self, t1: TreeNode, t2: TreeNode) -> bool:
+        if not t1 and not t2:
             return True
+
+        if not t1 or not t2:
+            return False
         
-        queue = []
-        queue.append(root)
+        return (t1.val == t2.val) and self.isMirror(t1.left, t2.right) and self.isMirror(t1.right, t2.left)
 
-        while queue:
-            level = []
-            size = len(queue)
-
-            for _ in range(size):
-                node = queue.pop(0)
-                level.append(node.left)
-                level.append(node.right)
-            
-            left_stack = level[:len(level)//2]
-            right_queue = level[len(level)//2:]
-
-            while left_stack and right_queue:
-                left = left_stack.pop()
-                right = right_queue.pop(0)
-
-                if not left and not right:
-                    continue
-
-                if not left or not right:
-                    return False
-
-                if left.val != right.val:
-                    return False
-            
-            queue = list(filter(lambda x: x, level))
-        
-        return True
+    def isSymmetric(self, root: TreeNode) -> bool:
+        return self.isMirror(root, root)
 
 s = Solution()
 

@@ -9,23 +9,13 @@ class TreeNode:
 
 class Solution:
     def binaryTreePaths(self, root: TreeNode) -> List[str]:
-        self.res = []
-        self.paths(root, "")
-
-        return self.res
-    
-    def paths(self, root: TreeNode, current: str):
         if not root:
-            return
+            return []
 
         if not root.left and not root.right:
-            self.res.append(current + str(root.val))
-
-        if root.left:
-            self.paths(root.left, current + str(root.val) + "->")
-
-        if root.right:
-            self.paths(root.right, current + str(root.val) + "->")
+            return [str(root.val)]
+        
+        return list(map(lambda x: str(root.val) + "->" + x, self.binaryTreePaths(root.left) + self.binaryTreePaths(root.right)))
 
 s = Solution()
 

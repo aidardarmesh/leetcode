@@ -14,25 +14,32 @@ class Solution:
             return root
         
         queue = []
-        queue.append(root)
+
+        if root.left:
+            queue.append(root.left)
+        
+        if root.right:
+            queue.append(root.right)
 
         while queue:
-            level, size = [], len(queue)
+            current = queue.pop(0)
+            size = len(queue)
+
+            if current.left:
+                queue.append(current.left)
+
+            if current.right:
+                queue.append(current.right)
 
             for _ in range(size):
                 node = queue.pop(0)
-                level.append(node)
-                
-                if node.left:
-                    queue.append(node.left)
-                
-                if node.right:
-                    queue.append(node.right)
-            
-            current = level.pop(0)
-
-            for node in level:
                 current.next = node
                 current = node
+                
+                if current.left:
+                    queue.append(current.left)
+                
+                if current.right:
+                    queue.append(current.right)
         
         return root

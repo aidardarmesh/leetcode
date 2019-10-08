@@ -9,33 +9,31 @@ class TreeNode:
 
 class Solution:
     def countUnivalSubtrees(self, root: TreeNode) -> int:
+        self.count = 0
+        self.is_uni(root)
+
+        return self.count
+    
+    def is_uni(self, root: TreeNode):
         if not root:
-            return 0
-        
+            return False
+
         if not root.left and not root.right:
-            return 1
+            self.count += 1
         
-        count = 0
-        left_count = self.countUnivalSubtrees(root.left)
-        right_count = self.countUnivalSubtrees(root.right)
-
-        if root.left and root.right:
-            count = left_count + right_count
-
-            if root.left.val == root.val and root.right.val == root.val:
-                count += 1
-        elif root.left:
-            count = left_count
-
-            if root.left.val == root.val:
-                count += 1
-        elif root.right:
-            count = right_count
-
-            if root.right.val == root.val:
-                count += 1
+            return True
         
-        return count
+        is_uni = True
+
+        if root.left:
+            is_uni = self.is_uni(root.left) and root.left.val == root.val
+        
+        if root.right:
+            is_uni = self.is_uni(root.right) and root.right.val == root.val and is_uni
+        
+        self.count += is_uni
+
+        return is_uni
 
 s = Solution()
 

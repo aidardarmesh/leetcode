@@ -26,3 +26,5 @@ class Solution:
                 
                 queue.append(current.left)
                 queue.append(current.right)
+        
+        return root

@@ -13,33 +13,16 @@ class Solution:
         if not root:
             return root
         
-        queue = []
-
-        if root.left:
-            queue.append(root.left)
-        
-        if root.right:
-            queue.append(root.right)
+        queue = [root]
 
         while queue:
-            current = queue.pop(0)
-            size = len(queue)
+            current = queue.pop()
 
-            if current.left:
+            if current.left and current.right:
+                current.left.next = current.right
+
+                if current.next:
+                    current.right.next = current.next.left
+                
                 queue.append(current.left)
-
-            if current.right:
                 queue.append(current.right)
-
-            for _ in range(size):
-                node = queue.pop(0)
-                current.next = node
-                current = node
-                
-                if current.left:
-                    queue.append(current.left)
-                
-                if current.right:
-                    queue.append(current.right)
-        
-        return root

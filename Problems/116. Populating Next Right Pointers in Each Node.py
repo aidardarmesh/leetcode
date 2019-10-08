@@ -13,18 +13,20 @@ class Solution:
         if not root:
             return root
         
-        queue = [root]
+        pre = root
+        current = None
 
-        while queue:
-            current = queue.pop()
+        while pre.left:
+            current = pre
 
-            if current.left and current.right:
+            while current:
                 current.left.next = current.right
 
                 if current.next:
                     current.right.next = current.next.left
                 
-                queue.append(current.left)
-                queue.append(current.right)
+                current = current.next
+            
+            pre = pre.left
         
         return root

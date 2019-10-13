@@ -2,23 +2,22 @@ from typing import *
 
 class Solution:
     def plusOne(self, digits: List[int]) -> List[int]:
-        res = []
-        round = 1
+        res, carry = [], 1
 
         while digits:
             digit = digits.pop()
-            digit += round
+            digit += carry
 
             if digit // 10 == 1:
                 digit = digit % 10
-                round = 1
+                carry = 1
             else:
-                round = 0
+                carry = 0
             
             res.insert(0, digit)
         
-        if round > 0:
-            res.insert(0, round)
+        if carry > 0:
+            res.insert(0, carry)
         
         return res
 

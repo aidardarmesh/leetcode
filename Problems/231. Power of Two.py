@@ -9,7 +9,7 @@ class Solution:
             if n % 2 != 0:
                 return False
             
-            n = n // 2
+            n = n >> 1
         
         return True
 

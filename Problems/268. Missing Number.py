@@ -2,11 +2,12 @@ from typing import *
 
 class Solution:
     def missingNumber(self, nums: List[int]) -> int:
-        n = len(nums)
-        # according to Gauss' formula
-        expected = n*(n+1)//2
+        missing = len(nums)
 
-        return expected - sum(nums)
+        for i, num in enumerate(nums):
+            missing ^= i ^ num
+        
+        return missing
 
 s = Solution()
 

@@ -3,9 +3,10 @@ from typing import *
 class Solution:
     def missingNumber(self, nums: List[int]) -> int:
         n = len(nums)
-        sum_ = sum([i for i in range(n+1)])
+        # according to Gauss' formula
+        expected = n*(n+1)//2
 
-        return sum_ - sum(nums)
+        return expected - sum(nums)
 
 s = Solution()
 

@@ -31,22 +31,24 @@ class Codec:
         
         data_list = data.split()
         root = node = TreeNode(int(data_list.pop(0)))
+        queue = [root]
 
-        while data_list:
+        while data_list and queue:
+            node = queue.pop(0)
+
             if data_list:
                 left = data_list.pop(0)
                 if left != 'None':
-                    node.left = TreeNode(int(left))
+                    left = TreeNode(int(left))
+                    node.left = left
+                    queue.append(left)
             
             if data_list:
                 right = data_list.pop(0)
                 if right != 'None':
-                    node.right = TreeNode(int(right))
-            
-            if node.left:
-                node = node.left
-            else:
-                node = node.right
+                    right = TreeNode(int(right))
+                    node.right = right
+                    queue.append(right)
 
         return root
 
@@ -78,4 +80,7 @@ s = '1 None 2 3'
 print(c.deserialize(s).val)
 
 s = '5 4 7 3 None 2 None -1 None 9'
+print(c.deserialize(s).val)
+
+s = '1 2 3 None None 4 5'
 print(c.deserialize(s).val)

@@ -33,46 +33,35 @@ class Codec:
             return None
         
         data_list = data.split()
-        root = TreeNode(int(data_list.pop(0)))
-        root_nodes = [root]
-        
+        root = node = TreeNode(int(data_list.pop(0)))
+
         while data_list:
-            size = len(root_nodes)
-
-            for _ in range(size):
-                node = root_nodes.pop(0)
+            if data_list:
                 left = data_list.pop(0)
-                right = data_list.pop(0)
-
-                if not node:
-                    continue
-                
                 if left != 'None':
-                    left = TreeNode(int(left))
-                    node.left = left
-                    root_nodes.append(left)
-                else:
-                    root_nodes.append(None)
-                
+                    node.left = TreeNode(int(left))
+            
+            if data_list:
+                right = data_list.pop(0)
                 if right != 'None':
-                    right = TreeNode(int(right))
-                    node.right = right
-                    root_nodes.append(right)
-                else:
-                    root_nodes.append(None)
-        
+                    node.right = TreeNode(int(right))
+            
+            if node.left:
+                node = node.left
+            else:
+                node = node.right
+
         return root
 
 c = Codec()
+s = '1 2 3'
+print(c.deserialize(s).val)
 
-node5 = TreeNode(5)
-node5.left = TreeNode(2)
-node5.right = TreeNode(3)
-node5.right.left = TreeNode(2)
-node5.right.right = TreeNode(4)
-node5.right.left.left = TreeNode(3)
-node5.right.left.right = TreeNode(1)
-
-s = c.serialize(node5)
-print(c.serialize(node5))
+s = ''
 print(c.deserialize(s))
+
+s = '1 None 2 3'
+print(c.deserialize(s).val)
+
+s = '5 4 7 3 None 2 None -1 None 9'
+print(c.deserialize(s).val)

@@ -8,25 +8,7 @@ class TreeNode(object):
 
 class Codec:
     def serialize(self, root):
-        queue, res = [root], []
-        size = len(queue)
-        
-        while any(queue):
-            for _ in range(size):
-                node = queue.pop(0)
-                
-                if node:
-                    res.append(str(node.val))
-                    queue.append(node.left)
-                    queue.append(node.right)
-                else:
-                    res.append('None')
-                    queue.append(None)
-                    queue.append(None)
-            
-            size *= 2
-        
-        return " ".join(res)
+        pass
         
     def deserialize(self, data):
         if not data:
@@ -54,6 +36,13 @@ class Codec:
         return root
 
 c = Codec()
+
+node = TreeNode(1)
+node.left = TreeNode(2)
+node.right = TreeNode(3)
+
+print(c.serialize(node))
+
 s = '1 2 3'
 print(c.deserialize(s).val)
 

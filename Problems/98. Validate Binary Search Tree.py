@@ -7,27 +7,22 @@ from typing import *
 #         self.right = None
 
 class Solution:
-    def is_valid(self, root, greater, less):
+    def is_valid(self, root):
         if not root:
-            return True
+            return True, 10**10, -10**10
         
-        for val in greater:
-            if not val > root.val:
-                return False
+        left_bst, left_min, left_max = self.is_valid(root.left)
+        right_bst, right_min, right_max = self.is_valid(root.right)
         
-        for val in less:
-            if not val < root.val:
-                return False
+        root_min = min(left_min, root.val)
+        root_max = max(root.val, right_max)
         
-        valid = True
+        root_bst = left_max < root.val < right_min
+        root_bst &= left_bst and right_bst
         
-        if root.left:
-            valid &= self.is_valid(root.left, greater[:] + [root.val], less[:])
-        
-        if root.right:
-            valid &= self.is_valid(root.right, greater[:], less[:] + [root.val])
-        
-        return valid
+        return root_bst, root_min, root_max
         
     def isValidBST(self, root: TreeNode) -> bool:
-        return self.is_valid(root, [], [])
+        bst, _, _ = self.is_valid(root)
+        
+        return bst

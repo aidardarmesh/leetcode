@@ -7,22 +7,27 @@ from typing import *
 #         self.right = None
 
 class Solution:
-    def isValidBST(self, root: TreeNode) -> bool:
-        res = []
-        stack = []
-        node = root
+    def is_valid(self, root, greater, less):
+        if not root:
+            return True
         
-        while stack or node:
-            if node:
-                stack.append(node)
-                node = node.left
-            elif stack:
-                node = stack.pop()
-                res.append(node.val)
-                node = node.right
-        
-        for i in range(len(res)-1):
-            if res[i] >= res[i+1]:
+        for val in greater:
+            if not val > root.val:
                 return False
         
-        return True
+        for val in less:
+            if not val < root.val:
+                return False
+        
+        valid = True
+        
+        if root.left:
+            valid &= self.is_valid(root.left, greater[:] + [root.val], less[:])
+        
+        if root.right:
+            valid &= self.is_valid(root.right, greater[:], less[:] + [root.val])
+        
+        return valid
+        
+    def isValidBST(self, root: TreeNode) -> bool:
+        return self.is_valid(root, [], [])

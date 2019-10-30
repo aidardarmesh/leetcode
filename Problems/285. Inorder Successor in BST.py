@@ -8,21 +8,14 @@ from typing import *
 
 class Solution:
     def inorderSuccessor(self, root: 'TreeNode', p: 'TreeNode') -> 'TreeNode':
-        stack = []
+        s = None
         node = root
-        prev = None
         
-        while stack or node:
-            if node:
-                stack.append(node)
+        while node:
+            if node.val > p.val:
+                s = node
                 node = node.left
-            elif stack:
-                node = stack.pop()
-                
-                if prev == p:
-                    return node
-                
-                prev = node
+            else:
                 node = node.right
         
-        return None
+        return s

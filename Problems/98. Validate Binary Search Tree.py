@@ -7,22 +7,27 @@ from typing import *
 #         self.right = None
 
 class Solution:
-    def is_valid(self, root):
-        if not root:
-            return True, 10**10, -10**10
-        
-        left_bst, left_min, left_max = self.is_valid(root.left)
-        right_bst, right_min, right_max = self.is_valid(root.right)
-        
-        root_min = min(left_min, root.val)
-        root_max = max(root.val, right_max)
-        
-        root_bst = left_max < root.val < right_min
-        root_bst &= left_bst and right_bst
-        
-        return root_bst, root_min, root_max
-        
     def isValidBST(self, root: TreeNode) -> bool:
-        bst, _, _ = self.is_valid(root)
+        # in_order traversal of BST gives all elem-s of BST in ASC order
+        # Therefore, during traversal, if next elem is smaller than current
+        # then tree is not BST
+
+        stack = []
+        node = root
+        prev = float('-inf')
+
+        while stack or node:
+            if node:
+                stack.append(node)
+                node = node.left
+            elif stack:
+                node = stack.pop()
+
+                if prev > node.val:
+                    return False
+                else:
+                    prev = node.val
+                
+                node = node.right
         
-        return bst
+        return True

@@ -9,12 +9,10 @@ from typing import *
 
 class Solution:
     def searchBST(self, root: TreeNode, val: int) -> TreeNode:
-        while root:
-            if root.val == val:
-                return root
-            elif root.val < val:
-                root = root.right
-            else:
-                root = root.left
+        if root == None or root.val == val:
+            return root
         
-        return None
+        if root.val < val:
+            return self.searchBST(root.right, val)
+        
+        return self.searchBST(root.left, val)

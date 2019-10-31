@@ -39,7 +39,7 @@ class Solution:
                 root.val = self.successor(root)
                 root.right = self.deleteNode(root.right, root.val)
             else:
-                root.val = self.predecessor(root.left)
+                root.val = self.predecessor(root)
                 root.left = self.deleteNode(root.left, root.val)
             
         return root

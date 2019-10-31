@@ -11,30 +11,22 @@ class TreeNode:
 class BSTIterator:
 
     def __init__(self, root: TreeNode):
-        self.res = []
-        stack = []
-        node = root
-
-        while stack or node:
-            if node:
-                stack.append(node)
-                node = node.left
-            elif stack:
-                node = stack.pop()
-                self.res.append(node.val)
-                node = node.right
+        self.stack = []
+        self.in_order_left(root)
+    
+    def in_order_left(self, root):
+        while root:
+            self.stack.append(root)
+            root = root.left
 
     def next(self) -> int:
-        """
-        @return the next smallest number
-        """
-        return self.res.pop(0)
+        node = self.stack.pop()
+        if node.right:
+            self.in_order_left(node.right)
+        return node.val
 
     def hasNext(self) -> bool:
-        """
-        @return whether we have a next smallest number
-        """
-        return len(self.res) > 0
+        return len(self.stack) > 0
 
 
 node = TreeNode(7)

@@ -12,9 +12,20 @@ class Solution:
         if not root:
             return TreeNode(val)
         
-        if root.val < val:
-            root.right = self.insertIntoBST(root.right, val)
-        else root.val > val:
-            root.left = self.insertIntoBST(root.left, val)
-        
+        node = root
+
+        while True:
+            if node.val > val:
+                if node.left:
+                    node = node.left
+                else:
+                    node.left = TreeNode(val)
+                    break
+            elif node.val < val:
+                if node.right:
+                    node = node.right
+                else:
+                    node.right = TreeNode(val)
+                    break
+
         return root

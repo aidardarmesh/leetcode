@@ -9,15 +9,12 @@ from typing import *
 
 class Solution:
     def insertIntoBST(self, root: TreeNode, val: int) -> TreeNode:
+        if not root:
+            return TreeNode(val)
+        
         if root.val < val:
-            if not root.right:
-                root.right = TreeNode(val)
-            else:
-                self.insertIntoBST(root.right, val)
-        elif root.val > val:
-            if not root.left:
-                root.left = TreeNode(val)
-            else:
-                self.insertIntoBST(root.left, val)
+            root.right = self.insertIntoBST(root.right, val)
+        else root.val > val:
+            root.left = self.insertIntoBST(root.left, val)
         
         return root

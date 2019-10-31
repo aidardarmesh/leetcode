@@ -15,27 +15,31 @@ class Solution:
             cur = cur.left
 
         return cur
+    
+    def predecessor(self, root):
+        cur = root.left
+
+        while cur and cur.right:
+            cur = cur.right
+        
+        return cur
 
     def deleteNode(self, root: TreeNode, key: int) -> TreeNode:
         if root == None:
             return root
         
-        if root.val == key:
-            if not root.left:
-                return root.right
-            
-            if not root.right:
-                return root.left
-            
-            p = self.successor(root)
-            root.val = p.val
-            root.right = self.deleteNode(root.right, key)
-
-            return root
-        
         if root.val < key:
             root.right = self.deleteNode(root.right, key)
+        elif root.val < key:
+            root.left = self.deleteNode(root.left, key
         else:
-            root.left = self.deleteNode(root.left, key)
-        
+            if not root.left and not root.right:
+                root = None
+            elif root.right:
+                root.val = self.successor(root)
+                root.right = self.deleteNode(root.right, root.val)
+            else:
+                root.val = self.predecessor(root.left)
+                root.left = self.deleteNode(root.left, root.val)
+            
         return root

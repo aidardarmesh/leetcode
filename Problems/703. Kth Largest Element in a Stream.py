@@ -18,7 +18,7 @@ class KthLargest:
     
     def __insert(self, val: int):
         if self.root == None:
-            self.root = TreeNode((val, 1))
+            self.root = TreeNode([val, 1])
             return
         
         node = self.root
@@ -26,19 +26,18 @@ class KthLargest:
         while node and node.val[0] != val:
             if node.val[0] < val:
                 if not node.right:
-                    node.right = TreeNode((val, 1))
+                    node.right = TreeNode([val, 1])
                     return
                 else:
                     node = node.right
             elif node.val[0] > val:
                 if not node.left:
-                    node.left = TreeNode((val, 1))
+                    node.left = TreeNode([val, 1])
                     return
                 else:
                     node = node.left
-            else:
-                node.val[1] += 1
-                return
+        
+        node.val[1] += 1
     
     def __klargest(self):
         stack = []
@@ -58,35 +57,17 @@ class KthLargest:
                 node = node.left
         
         return None
-    
-    def rev_order(self):
-        res = []
-        stack = []
-        node = self.root
-
-        while stack or node:
-            if node:
-                stack.append(node)
-                node = node.right
-            elif stack:
-                node = stack.pop()
-                res.append(node.val)
-                node = node.left
-        
-        return res
 
     def add(self, val: int) -> int:
         self.__insert(val)
-
-        print(self.rev_order())
 
         return self.__klargest()
 
 
 kthLargest = KthLargest(3, [4,5,8,2])
-print(kthLargest.add(3))
-print(kthLargest.add(5))
-# assert kthLargest.add(5) == 5
-# assert kthLargest.add(10) == 5
-# assert kthLargest.add(9) == 8
-# assert kthLargest.add(4) == 8
+assert kthLargest.add(3) == 4
+assert kthLargest.add(5) == 5
+assert kthLargest.add(5) == 5
+assert kthLargest.add(10) == 5
+assert kthLargest.add(9) == 8
+assert kthLargest.add(4) == 8

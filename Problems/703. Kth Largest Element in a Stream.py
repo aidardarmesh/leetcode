@@ -2,66 +2,54 @@ from typing import *
 
 
 class TreeNode:
-    def __init__(self, val: int):
+    def __init__(self, val: int, cnt: int):
         self.val = val
+        self.cnt = cnt
         self.left = None
         self.right = None
 
 
 class KthLargest:
-    def __init__(self, k: int, nums: List[int]):
+    class KthLargest:
+    def insert(self, root, val):
+        if root == None:
+            return TreeNode(val, 1)
+        
+        if root.val < val:
+            root.right = self.insert(root.right, val)
+        else:
+            root.left = self.insert(root.left, val)
+        
+        root.cnt += 1
+        
+        return root
+    
+    def search(self, root, k):
+        '''m is size of right subtree'''
+        m = root.right.cnt if root.right else 0
+        
+        '''root is m+1 largest in BST'''
+        if k == m+1:
+            return root.val
+        
+        if k <= m:
+            '''find klargest in right subtree'''
+            return self.search(root.right, k)
+        else:
+            '''find (k-m-1)th largest in left subtree'''
+            return self.search(root.left, k-m-1)
+    
+    def __init__(self, k, nums):
         self.k = k
         self.root = None
-
-        for val in nums:
-            self.__insert(val)
+        
+        for num in nums:
+            self.root = self.insert(self.root, num)
     
-    def __insert(self, val: int):
-        if self.root == None:
-            self.root = TreeNode([val, 1])
-            return
+    def add(self, val):
+        self.root = self.insert(self.root, val)
         
-        node = self.root
-
-        while node and node.val[0] != val:
-            if node.val[0] < val:
-                if not node.right:
-                    node.right = TreeNode([val, 1])
-                    return
-                else:
-                    node = node.right
-            elif node.val[0] > val:
-                if not node.left:
-                    node.left = TreeNode([val, 1])
-                    return
-                else:
-                    node = node.left
-        
-        node.val[1] += 1
-    
-    def __klargest(self):
-        stack = []
-        k = self.k
-        node = self.root
-
-        while stack or node:
-            if node:
-                stack.append(node)
-                node = node.right
-            elif stack:
-                node = stack.pop()
-                val, count = node.val[0], node.val[1]
-                k -= count
-                if k <= 0:
-                    return node.val[0]
-                node = node.left
-        
-        return None
-
-    def add(self, val: int) -> int:
-        self.__insert(val)
-
-        return self.__klargest()
+        return self.search(self.root, self.k)
 
 
 kthLargest = KthLargest(3, [4,5,8,2])

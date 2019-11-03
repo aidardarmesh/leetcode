@@ -8,19 +8,23 @@ from typing import *
 #         self.right = None
 
 class Solution:
-    def height(self, root):
+    def height(self, root, h):
         if not root:
-            return True, 0
+            return h-1
         
-        left_b, left_h = self.height(root.left)
-        right_b, right_h = self.height(root.right)
+        left_h = self.height(root.left, h+1)
+        right_h = self.height(root.right, h+1)
         
-        return left_b and right_b and abs(left_h-right_h) <= 1, max(left_h, right_h) + 1
+        self.balanced &= abs(left_h-right_h) <= 1
+
+        return max(left_h, right_h)
     
     def isBalanced(self, root: TreeNode) -> bool:
+        self.balanced = True
+
         if not root:
-            return True
+            return self.balanced
         
-        root_balanced, root_height = self.height(root)
-        
-        return root_balanced
+        root_h = self.height(root, 0)
+
+        return self.balanced

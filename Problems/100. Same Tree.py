@@ -1,4 +1,5 @@
 from typing import *
+from collections import deque
 
 # Definition for a binary tree node.
 # class TreeNode:
@@ -9,18 +10,32 @@ from typing import *
 
 class Solution:
     def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
-        # check if p and q are both None
-        if not p and not q:
+        def check(p, q):
+            # check for existence of both
+            if not p and not q:
+                return True
+            
+            # check if one of them is None
+            if p == None or q == None:
+                return False
+            
+            # check values, because both exist
+            if p.val != q.val:
+                return False
+            
+            # current place means they both exist and values are equal
             return True
         
-        # check if one of them None
-        if not p or not q:
-            return False
+        deq = deque()
+        deq.append((p,q))
+
+        while deq:
+            p, q = deq.popleft()
+            if not check(p, q):
+                return False
+            
+            if p and q:
+                deq.append((p.left, q.left))
+                deq.append((p.right, q.right))
         
-        # current line code means they're both ok
-        # then check values
-        if p.val != q.val:
-            return False
-        
-        return self.isSameTree(p.right, q.right) and \
-               self.isSameTree(p.left, q.left)
+        return True

@@ -8,25 +8,19 @@ from typing import *
 #         self.right = None
 
 class Solution:
-    def level_order(self, root):
-        queue = [root]
-        res = []
-        
-        while any(queue):
-            size = len(queue)
-            
-            for _ in range(size):
-                node = queue.pop(0)
-                
-                if not node:
-                    res.append(node)
-                    continue
-                
-                res.append(node.val)
-                queue.append(node.left)
-                queue.append(node.right)
-        
-        return res
-    
     def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
-        return self.level_order(p) == self.level_order(q)
+        # check if p and q are both None
+        if not p and not q:
+            return True
+        
+        # check if one of them None
+        if not p or not q:
+            return False
+        
+        # current line code means they're both ok
+        # then check values
+        if p.val != q.val:
+            return False
+        
+        return self.isSameTree(p.right, q.right) and \
+               self.isSameTree(p.left, q.left)

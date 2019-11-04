@@ -9,32 +9,21 @@ from typing import *
 
 class Solution:
     def levelOrderBottom(self, root: TreeNode) -> List[List[int]]:
-        from collections import deque
+        queue = [root]
+        res = []
 
-        def level_order(root):
-            deq = deque()
-            deq.append(root)
-            res = []
-
-            if not root:
-                return res
-
-            while deq:
-                size = len(deq)
-                level = []
-
-                for _ in range(size):
-                    node = deq.popleft()
-                    level.append(node.val)
-
-                    if node.left:
-                        deq.append(node.left)
-                    
-                    if node.right:
-                        deq.append(node.right)
-                    
-                res.append(level)
-            
+        if not root:
             return res
+
+        while queue:
+            res.insert(0, [node.val for node in queue])
+            new_queue = []
+
+            for node in queue:
+                for child in (node.left, node.right):
+                    if child:
+                        new_queue.append(child)
+            
+            queue = new_queue
         
-        return reversed(level_order(root))
+        return res

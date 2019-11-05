@@ -12,17 +12,17 @@ class Solution:
         if not root:
             return 0
         
-        stack = [root]
+        queue = [root]
         cnt = 0
         
-        while stack:
-            node = stack.pop()
+        while queue:
+            node = queue.pop(0)
             cnt += 1
             
-            if node.right:
-                stack.append(node.right)
-            
             if node.left:
-                stack.append(node.left)
+                queue.append(node.left)
+            
+            if node.right:
+                queue.append(node.right)
         
         return cnt

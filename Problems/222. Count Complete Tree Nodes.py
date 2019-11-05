@@ -9,20 +9,4 @@ from typing import *
 
 class Solution:
     def countNodes(self, root: TreeNode) -> int:
-        if not root:
-            return 0
-        
-        queue = [root]
-        cnt = 0
-        
-        while queue:
-            node = queue.pop(0)
-            cnt += 1
-            
-            if node.left:
-                queue.append(node.left)
-            
-            if node.right:
-                queue.append(node.right)
-        
-        return cnt
+        return 1 + self.countNodes(root.left) + self.countNodes(root.right) if root else 0

@@ -9,18 +9,10 @@ from typing import *
 
 class Solution:
     def closestValue(self, root: TreeNode, target: float) -> int:
-        if not root:
-            return 9999999999999
+        closest = root.val
+
+        while root:
+            closest = min(closest, root.val, key=lambda x: abs(target-x))
+            root = root.left if root.val > target else root.right
         
-        if root.val > target:
-            closest = self.closestValue(root.left, target)
-            
-            if abs(closest-target) < abs(root.val-target):
-                return closest
-        elif root.val < target:
-            closest = self.closestValue(root.right, target)
-            
-            if abs(closest-target) < abs(root.val-target):
-                return closest
-        
-        return root.val
+        return closest

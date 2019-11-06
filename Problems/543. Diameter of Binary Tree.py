@@ -13,12 +13,12 @@ class Solution:
             if not root:
                 return 0, 0
 
-            left_h, left_d = helper(root.left)
-            right_h, right_d = helper(root.right)
-            d = left_h + right_h
+            left_depth, left_diam = helper(root.left)
+            right_depth, right_diam = helper(root.right)
+            diam = left_diam + right_diam
 
-            return 1 + max(left_h, right_h), max(d, left_d, right_d)
+            return 1 + max(left_depth, right_depth), max(diam, left_diam, right_diam)
         
-        h, d = helper(root)
+        depth, diam = helper(root)
         
-        return d
+        return diam

@@ -11,7 +11,7 @@ class Solution:
     def maxPathSum(self, root: TreeNode) -> int:
         def helper(root):
             diam = path = root.val
-            left_path = right_path = left_diam = right_diam = float('-inf')
+            left_diam = right_diam = float('-inf')
             
             if root.left:
                 left_path, left_diam = helper(root.left)

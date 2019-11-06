@@ -9,18 +9,16 @@ from typing import *
 
 class Solution:
     def diameterOfBinaryTree(self, root: TreeNode) -> int:
-        if not root:
-            return 0
-        
-        def height(root):
+        def helper(root):
             if not root:
-                return 0
-            
-            return 1 + max(height(root.left), height(root.right))
+                return 0, 0
+
+            left_h, left_d = helper(root.left)
+            right_h, right_d = helper(root.right)
+            d = left_h + right_h
+
+            return 1 + max(left_h, right_h), max(d, left_d, right_d)
         
-        d = height(root.left) + height(root.right)
+        h, d = helper(root)
         
-        left_d = self.diameterOfBinaryTree(root.left)
-        right_d = self.diameterOfBinaryTree(root.right)
-        
-        return max(d, left_d, right_d)
+        return d

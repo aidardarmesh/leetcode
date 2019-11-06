@@ -9,26 +9,26 @@ class TreeNode:
 
 class Solution:
     def containsNearbyAlmostDuplicate(self, nums: List[int], k: int, t: int) -> bool:
-        if not nums:
+        if t < 0:
             return False
         
-        cache = {}
-        
-        for i in range(len(nums)):
-            if i-k > 0:
-                b_id_del = nums[i-k-1]//(t+1)
-                del cache[b_id_del]
-            
-            b_id = nums[i]//(t+1)
-            cond1 = b_id in cache
-            cond2 = b_id-1 in cache and abs(cache[b_id-1]-nums[i]) <= t
-            cond3 = b_id+1 in cache and abs(cache[b_id+1]-nums[i]) <= t
+        buckets = {}
+
+        for i, num in enumerate(nums):
+            if len(buckets) > k:
+                b_id_old = nums[i-k-1] // (t+1)
+                del buckets[b_id_old]
+
+            b_id = num // (t+1)
+            cond1 = b_id in buckets
+            cond2 = b_id-1 in buckets and abs(buckets[b_id-1]-num) <= t
+            cond3 = b_id+1 in buckets and abs(buckets[b_id+1]-num) <= t
 
             if cond1 or cond2 or cond3:
                 return True
-            
-            cache[b_id] = nums[i]
-        
+
+            buckets[b_id] = num
+    
         return False
 
 

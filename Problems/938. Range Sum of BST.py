@@ -9,19 +9,22 @@ from typing import *
 
 class Solution:
     def rangeSumBST(self, root: TreeNode, L: int, R: int) -> int:
-        while root and not (L <= root.val <= R):
-            if root.val < L:
-                root = root.right
-            elif root.val > R:
-                root = root.left
-        
+        stack = [root]
         sum = 0
         
-        if not root:
-            return sum
-        
-        sum += root.val
-        sum += self.rangeSumBST(root.left, L, R)
-        sum += self.rangeSumBST(root.right, L, R)
+        while stack:
+            node = stack.pop()
+
+            if not node:
+                continue
+
+            if L <= node.val <= R:
+                sum += node.val
+            
+            if L < node.val:
+                stack.append(node.left)
+            
+            if node.val < R:
+                stack.append(node.right)
         
         return sum

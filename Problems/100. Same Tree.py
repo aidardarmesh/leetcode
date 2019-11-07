@@ -10,20 +10,14 @@ from collections import deque
 
 class Solution:
     def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
-        def serialize(root):
-            queue = [root]
-            res = []
-            
-            while any(queue):
-                node = queue.pop(0)
-                
-                if node:
-                    res.append(node.val)
-                    queue.append(node.left)
-                    queue.append(node.right)
-                else:
-                    res.append(None)
-            
-            return res
+        if not p and not q:
+            return True
         
-        return serialize(p) == serialize(q)
+        if not p or not q:
+            return False
+        
+        if p.val != q.val:
+            return False
+        
+        return self.isSameTree(p.left, q.left) and \
+               self.isSameTree(p.right, q.right)

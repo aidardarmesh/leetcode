@@ -9,20 +9,21 @@ from typing import *
 
 class Solution:
     def pathSum(self, root: TreeNode, sum: int) -> List[List[int]]:
-        res = []
+        self.res = []
         
-        def collect(root, sum, path, res):
-            if not root:
-                return
+        def helper(root, sum, path):
+            if not root.left and not root.right and sum == root.val:
+                self.res.append(path+[root.val])
             
-            if not root.left and not root.right and root.val == sum:
-                path.append(root.val)
-                res.append(path)
-                return
+            if root.left:
+                helper(root.left, sum-root.val, path+[root.val])
             
-            collect(root.left, sum-root.val, path+[root.val], res)
-            collect(root.right, sum-root.val, path+[root.val], res)
+            if root.right:
+                helper(root.right, sum-root.val, path+[root.val])
         
-        collect(root, sum, [], res)
+        if not root:
+            return self.res
         
-        return res
+        helper(root, sum, [])
+        
+        return self.res

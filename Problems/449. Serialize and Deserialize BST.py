@@ -15,19 +15,23 @@ class Codec:
         :type root: TreeNode
         :rtype: str
         """
-        queue = [root]
+        # making pre-order
+        if not root:
+            return ''
+        
+        stack = [root]
         res = []
         
-        while any(queue):
-            node = queue.pop(0)
+        while stack:
+            node = stack.pop()
+            res.append(str(node.val))
             
-            if node:
-                res.append(str(node.val))
-                queue.append(node.left)
-                queue.append(node.right)
-            else:
-                res.append('None')
-        
+            if node.right:
+                stack.append(node.right)
+            
+            if node.left:
+                stack.append(node.left)
+            
         return ' '.join(res)
 
     def deserialize(self, data):
@@ -36,33 +40,23 @@ class Codec:
         :type data: str
         :rtype: TreeNode
         """
-        lst = data.split()
-        
-        if not lst:
-            return None
-        
-        root_val = lst.pop(0)
-        root = TreeNode(int(root_val))
-        queue = [root]
-        
-        while lst:
-            node = queue.pop(0)
+        # inserting each val from lst and returning root of tree
+        def insert(root, val):
+            if not root:
+                return TreeNode(val)
             
-            if lst:
-                val = lst.pop(0)
-                
-                if val != 'None':
-                    left = TreeNode(int(val))
-                    node.left = left
-                    queue.append(left)
+            if root.val > val:
+                root.left = insert(root.left, val)
+            elif root.val < val:
+                root.right = insert(root.right, val)
             
-            if lst:
-                val = lst.pop(0)
-                
-                if val != 'None':
-                    right = TreeNode(int(val))
-                    node.right = right
-                    queue.append(right)
+            return root
+        
+        lst = list(map(lambda x: int(x), data.split()))
+        root = None
+        
+        for num in lst:
+            root = insert(root, num)
         
         return root
         

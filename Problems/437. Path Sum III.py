@@ -18,8 +18,6 @@ class Solution(object):
             
             if root.val == node_sum:
                 self.paths += 1
-                # path(root.left, sum, sum)
-                # path(root.right, sum, sum)
             
             path(root.left, node_sum-root.val, sum)
             path(root.right, node_sum-root.val, sum)

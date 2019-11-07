@@ -10,32 +10,20 @@ from collections import deque
 
 class Solution:
     def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
-        def check(p, q):
-            # check for existence of both
-            if not p and not q:
-                return True
+        def serialize(root):
+            queue = [root]
+            res = []
             
-            # check if one of them is None
-            if p == None or q == None:
-                return False
+            while any(queue):
+                node = queue.pop(0)
+                
+                if node:
+                    res.append(node.val)
+                    queue.append(node.left)
+                    queue.append(node.right)
+                else:
+                    res.append(None)
             
-            # check values, because both exist
-            if p.val != q.val:
-                return False
-            
-            # current place means they both exist and values are equal
-            return True
+            return res
         
-        deq = deque()
-        deq.append((p,q))
-
-        while deq:
-            p, q = deq.popleft()
-            if not check(p, q):
-                return False
-            
-            if p and q:
-                deq.append((p.left, q.left))
-                deq.append((p.right, q.right))
-        
-        return True
+        return serialize(p) == serialize(q)

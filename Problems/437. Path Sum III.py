@@ -9,11 +9,6 @@ from typing import *
 
 class Solution(object):
     def pathSum(self, root, sum):
-        """
-        :type root: TreeNode
-        :type sum: int
-        :rtype: int
-        """
         self.paths = 0
         self.root_nodes = set()
         

@@ -8,14 +8,18 @@ from typing import *
 #         self.right = None
 
 class Solution:
-    def __init__(self):
+    def convertBST(self, root: TreeNode) -> TreeNode:
         self.total = 0
         
-    def convertBST(self, root: TreeNode) -> TreeNode:
-        if root:
-            self.convertBST(root.right)
-            self.total += root.val
-            root.val = self.total
-            self.convertBST(root.left)
+        def convert(root):
+            if root:
+                convert(root.right)
+                self.total += root.val
+                root.val = self.total
+                convert(root.left)
+            
+            return root
+        
+        convert(root)
         
         return root

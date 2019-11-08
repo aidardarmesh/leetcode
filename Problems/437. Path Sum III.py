@@ -12,23 +12,21 @@ class Solution(object):
         self.paths = 0
         self.root_nodes = set()
         
-        def path(root, node_sum, sum):
-            if not root:
-                return
-            
-            if root.val == node_sum:
-                self.paths += 1
-            
-            path(root.left, node_sum-root.val, sum)
-            path(root.right, node_sum-root.val, sum)
-            
-            if not root.left in self.root_nodes:
-                path(root.left, sum, sum)
-                self.root_nodes.add(root.left)
-            
-            if not root.right in self.root_nodes:
-                path(root.right, sum, sum)
-                self.root_nodes.add(root.right)
+        def path(root, path_sum, sum):
+            if root:
+                if root.val == path_sum:
+                    self.paths += 1
+                
+                path(root.left, path_sum-root.val, sum)
+                path(root.right, path_sum-root.val, sum)
+                
+                if not root.left in self.root_nodes:
+                    path(root.left, sum, sum)
+                    self.root_nodes.add(root.left)
+                
+                if not root.right in self.root_nodes:
+                    path(root.right, sum, sum)
+                    self.root_nodes.add(root.right)
         
         path(root, sum, sum)
         

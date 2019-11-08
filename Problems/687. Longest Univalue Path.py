@@ -9,22 +9,28 @@ from typing import *
 
 class Solution:
     def longestUnivaluePath(self, root: TreeNode) -> int:
-        self.longest_unipath = 0
+        self.longest = 0
         
-        def path(root, uni_val, path_len):
+        def uni_path(root):
             if root is None:
-                return 0
+                # node_val, path_len
+                return float('inf'), 0
             
-            if root.val == uni_val:
-                self.longest_unipath = max(self.longest_unipath, path_len+1)
-                path(root.left, uni_val, path_len+1)
-                path(root.right, uni_val, path_len+1)
-            else:
-                path(root.left, root.val, 0)
-                path(root.right, root.val, 0)
+            path = 0
+            left_val, left_path = uni_path(root.left)
+            right_val, right_path = uni_path(root.right)
             
-            return 
+            if root.val == left_val:
+                path += left_path
+                self.longest = max(self.longest, path)
+            
+            if root.val == right_val:
+                path += right_path
+                self.longest = max(self.longest, path)
+            
+            return root.val, max(left_path if root.val == left_val else 0, \
+                                 right_path if root.val == right_val else 0) + 1
         
-        path(root, float('inf'), 0)
+        uni_path(root)
         
-        return self.longest_unipath
+        return self.longest

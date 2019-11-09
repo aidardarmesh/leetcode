@@ -6,8 +6,7 @@ class Solution:
         from collections import Counter
         import re
         
-        words = list(map(lambda x: x.lower(), re.findall(r'[\w]+', paragraph)))
-        cnt = Counter(words)
+        cnt = Counter(re.findall(r'[\w]+', paragraph.lower()))
         
         for ban_word in banned:
             del cnt[ban_word]

@@ -8,26 +8,19 @@ from typing import *
 
 class Solution:
     def isValidBST(self, root: TreeNode) -> bool:
-        # in_order traversal of BST gives all elem-s of BST in ASC order
-        # Therefore, during traversal, if next elem is smaller than current
-        # then tree is not BST
+        def helper(root, lower, upper):
+            if root is None:
+                return True
+            
+            if root.val <= lower:
+                return False
+            
+            if root.val >= upper:
+                return False
+            
+            left = helper(root.left, lower, root.val)
+            right = helper(root.right, root.val, upper)
 
-        stack = []
-        node = root
-        prev = float('-inf')
-
-        while stack or node:
-            if node:
-                stack.append(node)
-                node = node.left
-            elif stack:
-                node = stack.pop()
-
-                if prev > node.val:
-                    return False
-                else:
-                    prev = node.val
-                
-                node = node.right
+            return left and right
         
-        return True
+        return helper(root, float('-inf'), float('inf'))

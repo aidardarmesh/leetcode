@@ -1,7 +1,7 @@
 from typing import *
 
 
-class Node:
+class TrieNode:
     
     def __init__(self, val):
         self.val = val
@@ -14,7 +14,7 @@ class Trie:
         """
         Initialize your data structure here.
         """
-        self.root = Node('')
+        self.root = TrieNode('')
 
     def insert(self, word: str) -> None:
         """
@@ -24,7 +24,7 @@ class Trie:
         
         for c in word:
             if not c in cur.children:
-                cur.children[c] = Node(c)
+                cur.children[c] = TrieNode(c)
             cur = cur.children[c]
         
         cur.is_word = True

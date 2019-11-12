@@ -3,8 +3,7 @@ from typing import *
 
 class TrieNode:
     
-    def __init__(self, val):
-        self.val = val
+    def __init__(self):
         self.is_word = False
         self.children = {}
 
@@ -14,7 +13,7 @@ class Trie:
         """
         Initialize your data structure here.
         """
-        self.root = TrieNode('')
+        self.root = TrieNode()
 
     def insert(self, word: str) -> None:
         """
@@ -24,7 +23,7 @@ class Trie:
         
         for c in word:
             if not c in cur.children:
-                cur.children[c] = TrieNode(c)
+                cur.children[c] = TrieNode()
             cur = cur.children[c]
         
         cur.is_word = True

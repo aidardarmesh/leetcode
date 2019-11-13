@@ -67,19 +67,11 @@ class AutocompleteSystem:
         
         for sentence in sentences:
             self.trie.insert(sentence)
-    
-    def __input_ends(self, c):
-        ending_chars = ["#"]
 
-        if c in ending_chars:
-            return True
-
-        return False
-
-    def inputChar(self, c):
+    def input(self, c):
         ans = []
         
-        if self.__input_ends(c):
+        if c == "#":
             self.hotness[self.input] = self.hotness.get(self.input, 0) + 1
             self.trie.insert(self.input)
         else:
@@ -107,7 +99,7 @@ class AutocompleteSystem:
 
 
 system = AutocompleteSystem(["i love you","island","iroman","i love leetcode"], [5,3,2,2])
-print(system.inputChar("i"))
-print(system.inputChar(" "))
-print(system.inputChar("l"))
-print(system.inputChar("#"))
+print(system.input("i"))
+print(system.input(" "))
+print(system.input("l"))
+print(system.input("#"))

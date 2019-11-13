@@ -56,7 +56,7 @@ class AutocompleteSystem:
     def __init__(self, sentences, times):
         self.trie = Trie()
         self.hotness = {}
-        self.input = ""
+        self.prefix = ""
         self.top_total = 3
         
         for i in range(len(times)):
@@ -69,11 +69,11 @@ class AutocompleteSystem:
         ans = []
         
         if c == "#":
-            self.hotness[self.input] = self.hotness.get(self.input, 0) + 1
-            self.trie.insert(self.input)
+            self.hotness[self.prefix] = self.hotness.get(self.prefix, 0) + 1
+            self.trie.insert(self.prefix)
         else:
-            self.input += c
-            sentences = self.trie.findPrefixed(self.input)
+            self.prefix += c
+            sentences = self.trie.findPrefixed(self.prefix)
             rating = []
             
             for sentence in sentences:

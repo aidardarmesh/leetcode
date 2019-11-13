@@ -71,10 +71,13 @@ class AutocompleteSystem:
         if c == "#":
             self.hotness[self.prefix] = self.hotness.get(self.prefix, 0) + 1
             self.trie.insert(self.prefix)
+            self.prefix = ""
         else:
             self.prefix += c
             sentences = self.trie.findPrefixed(self.prefix)
             rating = []
+
+            # print(sentences)
             
             for sentence in sentences:
                 rating.append((sentence, self.hotness[sentence]))
@@ -102,5 +105,8 @@ system = AutocompleteSystem(["i love you","island","iroman","i love leetcode"], 
 
 print(system.input("i"))
 print(system.input(" "))
-print(system.input("l"))
+print(system.input("a"))
 print(system.input("#"))
+print(system.input("i"))
+print(system.input(" "))
+print(system.input("a"))

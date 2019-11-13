@@ -39,20 +39,21 @@ class Trie:
             return res
         
         node = self.root
+        ans = []
         
         for c in prefix:
             if not c in node.children:
                 return []
             node = node.children[c]
         
+        if node.is_end:
+            ans.append(prefix)
+        
         rems = find(node)
-        ans = []
         
         if rems:
             for rem in rems:
                 ans.append(prefix + rem)
-        else:
-            ans.append(prefix)
         
         return ans
 
@@ -103,7 +104,7 @@ class AutocompleteSystem:
             ans = ans[:self.top_total]
         
         return ans
-'''
+
 system = AutocompleteSystem(["i love you","island","iroman","i love leetcode"], [5,3,2,2])
 
 print(system.input("i")) # ["i love you", "island", "i love leetcode"]
@@ -118,9 +119,10 @@ print(system.input("i")) # ["i love you", "island", "i a"]
 print(system.input(" ")) # ["i love you", "i a", "i love leetcode"]
 print(system.input("a")) # ["i a"]
 print(system.input("#")) # []
-'''
 
-system = AutocompleteSystem(["abc", "abbc", "a"], [3,3,3])
+
+
+system = AutocompleteSystem(["abc","abbc","a"], [3,3,3])
 
 print(system.input("b")) # []
 print(system.input("c")) # []

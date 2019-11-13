@@ -4,6 +4,7 @@
 class TrieNode:
     
     def __init__(self):
+        self.is_end = False
         self.children = {}
 
 
@@ -19,6 +20,8 @@ class Trie:
             if not c in node.children:
                 node.children[c] = TrieNode()
             node = node.children[c]
+
+        node.is_end = True
     
     def findPrefixed(self, prefix):
         def find(node):
@@ -100,7 +103,7 @@ class AutocompleteSystem:
             ans = ans[:self.top_total]
         
         return ans
-
+'''
 system = AutocompleteSystem(["i love you","island","iroman","i love leetcode"], [5,3,2,2])
 
 print(system.input("i")) # ["i love you", "island", "i love leetcode"]
@@ -114,4 +117,22 @@ print(system.input("#")) # []
 print(system.input("i")) # ["i love you", "island", "i a"]
 print(system.input(" ")) # ["i love you", "i a", "i love leetcode"]
 print(system.input("a")) # ["i a"]
+print(system.input("#")) # []
+'''
+
+system = AutocompleteSystem(["abc", "abbc", "a"], [3,3,3])
+
+print(system.input("b")) # []
+print(system.input("c")) # []
+print(system.input("#")) # []
+print(system.input("b")) # ["bc"]
+print(system.input("c")) # ["bc"]
+print(system.input("#")) # []
+print(system.input("a")) # ["a", "abbc", "abc"]
+print(system.input("b")) # ["abbc", "abc"]
+print(system.input("c")) # ["abc"]
+print(system.input("#")) # []
+print(system.input("a")) # ["abc", "a", "abbc"]
+print(system.input("b")) # ["abc", "abbc"]
+print(system.input("c")) # ["abc"]
 print(system.input("#")) # []

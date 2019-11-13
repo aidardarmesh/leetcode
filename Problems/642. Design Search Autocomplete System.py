@@ -83,9 +83,12 @@ class AutocompleteSystem:
             rating = sorted(rating, key=lambda x: x[0])
             
             # sort according to sentence hotness
-            for i in range(len(rating)-1):
-                if rating[i][1] < rating[i+1][1]:
-                    rating[i], rating[i+1] = rating[i+1], rating[i]
+            n = len(rating)
+
+            for i in range(n-1, 0, -1):
+                for j in range(i, 0, -1):
+                    if rating[j][1] > rating[j-1][1]:
+                        rating[j], rating[j-1] = rating[j-1], rating[j]
             
             for sentence, hotness in rating:
                 ans.append(sentence)

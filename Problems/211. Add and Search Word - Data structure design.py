@@ -8,15 +8,9 @@ class TrieNode:
 class WordDictionary:
 
     def __init__(self):
-        """
-        Initialize your data structure here.
-        """
         self.root = TrieNode()
 
     def addWord(self, word: str) -> None:
-        """
-        Adds a word into the data structure.
-        """
         node = self.root
         
         for c in word:
@@ -26,10 +20,7 @@ class WordDictionary:
         
         node.is_end = True
 
-    def search(self, word: str) -> bool:
-        """
-        Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter.
-        """
+    def search(self, word: str) -> bool:s
         def contains(node, word):
             for i in range(len(word)):
                 c = word[i]

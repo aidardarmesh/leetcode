@@ -4,7 +4,6 @@
 class TrieNode:
     
     def __init__(self):
-        # self.is_end = False
         self.children = {}
 
 
@@ -20,8 +19,6 @@ class Trie:
             if not c in node.children:
                 node.children[c] = TrieNode()
             node = node.children[c]
-        
-        # node.is_end = True
     
     def findPrefixed(self, prefix):
         def find(node):
@@ -99,6 +96,7 @@ class AutocompleteSystem:
 
 
 system = AutocompleteSystem(["i love you","island","iroman","i love leetcode"], [5,3,2,2])
+
 print(system.input("i"))
 print(system.input(" "))
 print(system.input("l"))

@@ -45,8 +45,11 @@ class Trie:
         rems = find(node)
         ans = []
         
-        for rem in rems:
-            ans.append(prefix + rem)
+        if rems:
+            for rem in rems:
+                ans.append(prefix + rem)
+        else:
+            ans.append(prefix)
         
         return ans
 
@@ -76,8 +79,6 @@ class AutocompleteSystem:
             self.prefix += c
             sentences = self.trie.findPrefixed(self.prefix)
             rating = []
-
-            # print(sentences)
             
             for sentence in sentences:
                 rating.append((sentence, self.hotness[sentence]))
@@ -88,10 +89,10 @@ class AutocompleteSystem:
             # sort according to sentence hotness
             n = len(rating)
 
-            for i in range(n-1, 0, -1):
-                for j in range(i, 0, -1):
-                    if rating[j][1] > rating[j-1][1]:
-                        rating[j], rating[j-1] = rating[j-1], rating[j]
+            for i in range(0, n-1):
+                for j in range(0, n-1-i):
+                    if rating[j][1] < rating[j+1][1]:
+                        rating[j], rating[j+1] = rating[j+1], rating[j]
             
             for sentence, hotness in rating:
                 ans.append(sentence)
@@ -100,13 +101,17 @@ class AutocompleteSystem:
         
         return ans
 
-
 system = AutocompleteSystem(["i love you","island","iroman","i love leetcode"], [5,3,2,2])
 
-print(system.input("i"))
-print(system.input(" "))
-print(system.input("a"))
-print(system.input("#"))
-print(system.input("i"))
-print(system.input(" "))
-print(system.input("a"))
+print(system.input("i")) # ["i love you", "island", "i love leetcode"]
+print(system.input(" ")) # ["i love you", "i love leetcode"]
+print(system.input("a")) # []
+print(system.input("#")) # []
+print(system.input("i")) # ["i love you", "island", "i love leetcode"]
+print(system.input(" ")) # ["i love you", "i love leetcode", "i a"]
+print(system.input("a")) # ["i a"]
+print(system.input("#")) # []
+print(system.input("i")) # ["i love you", "island", "i a"]
+print(system.input(" ")) # ["i love you", "i a", "i love leetcode"]
+print(system.input("a")) # ["i a"]
+print(system.input("#")) # []

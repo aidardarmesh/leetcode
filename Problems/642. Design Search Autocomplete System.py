@@ -1,107 +1,80 @@
 # from typing import *
 
 
-class TrieNode:
+class Node:
     
-    def __init__(self):
-        self.is_end = False
-        self.children = {}
+    def __init__(self, sent, times):
+        self.sent = sent
+        self.times = times
 
 
 class Trie:
     
     def __init__(self):
-        self.root = TrieNode()
-    
-    def insert(self, word):
-        node = self.root
-        
-        for c in word:
-            if not c in node.children:
-                node.children[c] = TrieNode()
-            node = node.children[c]
-
-        node.is_end = True
-    
-    def findPrefixed(self, prefix):
-        def find(node):
-            res = []
-            
-            for c in node.children:
-                rems = find(node.children[c])
-                
-                if rems:
-                    for rem in rems:
-                        res.append(c+rem)
-                else:
-                    res.append(c)
-            
-            return res
-        
-        node = self.root
-        ans = []
-        
-        for c in prefix:
-            if not c in node.children:
-                return []
-            node = node.children[c]
-        
-        if node.is_end:
-            ans.append(prefix)
-        
-        rems = find(node)
-        
-        if rems:
-            for rem in rems:
-                ans.append(prefix + rem)
-        
-        return ans
+        self.times = 0
+        self.children = {}
 
 
 class AutocompleteSystem:
 
-    def __init__(self, sentences, times):
-        self.trie = Trie()
-        self.hotness = {}
-        self.prefix = ""
-        self.top_total = 3
-        
+    def insert(self, trie, sent, times):
+        for c in sent:
+            if not c in trie.children:
+                trie.children[c] = Trie()
+            trie = trie.children[c]
+
+        trie.times += times
+
+    def __init__(self, sents, times):
+        self.root = Trie()
+        self.cur_sent = ""
+
         for i in range(len(times)):
-            self.hotness[sentences[i]] = times[i]
-        
-        for sentence in sentences:
-            self.trie.insert(sentence)
+            self.insert(self.root, sents[i], times[i])
+    
+    def lookup(self, trie, sent):
+        for c in sent:
+            if not c in trie.children:
+                return []
+            trie = trie.children[c]
+
+        lst = []
+        self.traverse(sent, trie, lst)
+
+        return lst
+    
+    def traverse(self, sent, trie, lst):
+        if trie.times:
+            lst.append(Node(sent, trie.times))
+
+        for c in trie.children:
+            self.traverse(sent+c, trie.children[c], lst)
 
     def input(self, c):
         ans = []
         
         if c == "#":
-            self.hotness[self.prefix] = self.hotness.get(self.prefix, 0) + 1
-            self.trie.insert(self.prefix)
-            self.prefix = ""
+            self.insert(self.root, self.cur_sent, 1)
+            self.cur_sent = ""
         else:
-            self.prefix += c
-            sentences = self.trie.findPrefixed(self.prefix)
-            rating = []
-            
-            for sentence in sentences:
-                rating.append((sentence, self.hotness[sentence]))
-            
+            self.cur_sent += c
+            res = self.lookup(self.root, self.cur_sent)
+
             # sort according to sentence value
-            rating = sorted(rating, key=lambda x: x[0])
+            res = sorted(res, key=lambda x: x.sent)
             
             # sort according to sentence hotness
-            n = len(rating)
+            n = len(res)
 
             for i in range(0, n-1):
                 for j in range(0, n-1-i):
-                    if rating[j][1] < rating[j+1][1]:
-                        rating[j], rating[j+1] = rating[j+1], rating[j]
+                    if res[j].times < res[j+1].times:
+                        res[j], res[j+1] = res[j+1], res[j]
             
-            for sentence, hotness in rating:
-                ans.append(sentence)
+            for node in res:
+                ans.append(node.sent)
             
-            ans = ans[:self.top_total]
+            ans = ans[:3]
         
         return ans
 

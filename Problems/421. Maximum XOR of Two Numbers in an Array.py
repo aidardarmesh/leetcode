@@ -18,7 +18,23 @@ class Solution:
                     node[bit] = {}
                 node = node[bit]
 
+        max_xor = 0
 
+        for num in nums:
+            node_xor = trie
+            curr_xor = 0
+            for bit in num:
+                opp_bit = 1 - bit
+                if opp_bit in node_xor:
+                    curr_xor = (curr_xor << 1) | 1
+                    node_xor = node_xor[opp_bit]
+                else:
+                    curr_xor = curr_xor << 1
+                    node_xor = node_xor[bit]
+        
+        max_xor = max(max_xor, curr_xor)
+
+        return max_xor
 
 s = Solution()
 

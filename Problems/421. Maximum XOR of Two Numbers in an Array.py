@@ -3,7 +3,10 @@ from typing import *
 
 class Solution:
     def findMaximumXOR(self, nums: List[int]) -> int:
-        pass
+        # maximum length of larget number in binary repr
+        L = len(bin(max(nums)))-2
+
+        
 
 s = Solution()
 

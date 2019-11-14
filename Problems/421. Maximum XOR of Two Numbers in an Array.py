@@ -32,7 +32,7 @@ class Solution:
                     curr_xor = curr_xor << 1
                     node_xor = node_xor[bit]
         
-        max_xor = max(max_xor, curr_xor)
+            max_xor = max(max_xor, curr_xor)
 
         return max_xor
 

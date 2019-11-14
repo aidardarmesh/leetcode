@@ -6,6 +6,9 @@ class Solution:
         # maximum length of larget number in binary repr
         L = len(bin(max(nums)))-2
 
+        # convering all nums to bin list in bin form
+        nums = [[(num >> i) & 1 for i in range(L)][::-1] for num in nums]
+
         
 
 s = Solution()

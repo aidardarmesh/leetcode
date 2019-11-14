@@ -9,7 +9,16 @@ class Solution:
         # convering all nums to bin list in bin form
         nums = [[(num >> i) & 1 for i in range(L)][::-1] for num in nums]
 
-        
+        # inserting all nums to common trie
+        trie = {}
+        for num in nums:
+            node = trie
+            for bit in num:
+                if not bit in node:
+                    node[bit] = {}
+                node = node[bit]
+
+
 
 s = Solution()
 

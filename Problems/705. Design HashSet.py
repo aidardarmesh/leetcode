@@ -16,7 +16,8 @@ class MyHashSet:
     def add(self, key: int) -> None:
         idx = self._hash(key)
         
-        self.buckets[idx].append(key)
+        if not key in self.buckets[idx]:
+            self.buckets[idx].append(key)
 
     def remove(self, key: int) -> None:
         idx = self._hash(key)

@@ -3,7 +3,7 @@ from typing import *
 
 class Solution:
     def isHappy(self, n: int) -> bool:
-        periods = set()
+        seen = set()
         
         while True:
             if n == 1:
@@ -18,10 +18,10 @@ class Solution:
             
             n = digits_sum
             
-            if n in periods:
+            if n in seen:
                 break
             else:
-                periods.add(n)
+                seen.add(n)
         
         return False
 

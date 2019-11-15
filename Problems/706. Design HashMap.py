@@ -43,23 +43,9 @@ class MyHashMap:
         Removes the mapping of the specified value key if this map contains a mapping for the key
         """
         idx = self._hash(key)
-        cnt = -1
 
-        for elem in self.buckets[idx]:
+        for i, elem in enumerate(self.buckets[idx]):
             if elem[0] == key:
-                cnt += 1
-                break
+                self.buckets[idx].pop(i)
+                return
 
-        if cnt != -1:
-            self.buckets[idx].pop(cnt)
-
-h_map = MyHashMap()
-
-h_map.put(1,1)
-h_map.put(2,2)
-assert h_map.get(1) == 1
-assert h_map.get(3) == -1
-h_map.put(2,1)
-assert h_map.get(2) == 1
-h_map.remove(2)
-assert h_map.get(2) == -1

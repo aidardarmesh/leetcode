@@ -8,26 +8,27 @@ class MyHashSet:
         Initialize your data structure here.
         """
         self.n_buckets = 1_000
-        self.buckets = [set() for _ in range(self.n_buckets)]  # each bucket is set
+        self.buckets = [[] for _ in range(self.n_buckets)]
     
-    def __hash(self, key):
+    def _hash(self, key):
         return key % self.n_buckets
 
     def add(self, key: int) -> None:
-        idx = self.__hash(key)
+        idx = self._hash(key)
         
-        self.buckets[idx].add(key)
+        self.buckets[idx].append(key)
 
     def remove(self, key: int) -> None:
-        idx = self.__hash(key)
+        idx = self._hash(key)
         
-        self.buckets[idx].discard(key)
+        if key in self.buckets[idx]:
+            self.buckets[idx].remove(key)
 
     def contains(self, key: int) -> bool:
         """
         Returns true if this set contains the specified element
         """
-        idx = self.__hash(key)
+        idx = self._hash(key)
         
         return key in self.buckets[idx]
 

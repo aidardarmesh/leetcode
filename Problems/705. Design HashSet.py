@@ -7,11 +7,11 @@ class MyHashSet:
         """
         Initialize your data structure here.
         """
-        self.n_buckets = 1_000
-        self.buckets = [[] for _ in range(self.n_buckets)]
+        self.n = 1_000
+        self.buckets = [[] for _ in range(self.n)]
     
     def _hash(self, key):
-        return key % self.n_buckets
+        return key % self.n
 
     def add(self, key: int) -> None:
         idx = self._hash(key)

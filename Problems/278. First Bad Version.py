@@ -13,16 +13,14 @@ class Solution:
         :rtype: int
         """
         l, r = 1, n
-        bad = 0
         
-        while l <= r:
+        while l < r:
             m = (l+r) // 2
             
             if isBadVersion(m):
-                bad = m
-                r = m-1
+                r = m
             else:
                 l = m+1
         
-        return bad
+        return l
         

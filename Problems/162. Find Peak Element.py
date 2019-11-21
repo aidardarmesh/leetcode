@@ -10,7 +10,7 @@ class Solution:
         
         l, r = 0, len(nums)-1
         
-        while l <= r:
+        while l < r:
             m = (l+r) // 2
             
             if get_item(nums, m) < get_item(nums, m+1):
@@ -18,7 +18,7 @@ class Solution:
                 continue
             
             if get_item(nums, m) < get_item(nums, m-1):
-                r = m-1
+                r = m
                 continue
             
             return m

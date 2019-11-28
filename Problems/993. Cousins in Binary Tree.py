@@ -13,15 +13,16 @@ class Solution:
             return False
         
         parent = {}
+        depth = {}
+        i = 0
         queue = [root]
         
         while queue:
             size = len(queue)
-            level = set()
             
             for _ in range(size):
                 node = queue.pop(0)
-                level.add(node.val)
+                depth[node.val] = i
                 
                 if node.left:
                     queue.append(node.left)
@@ -31,8 +32,6 @@ class Solution:
                     queue.append(node.right)
                     parent[node.right.val] = node.val
             
-            if x in level and y in level:
-                if x in parent and y in parent and parent[x] != parent[y]:
-                    return True
+            i += 1
         
-        return False
+        return depth[x] == depth[y] and parent[x] != parent[y]

@@ -17,11 +17,11 @@ class Solution:
         
         while queue:
             size = len(queue)
-            level = []
+            level = set()
             
             for _ in range(size):
                 node = queue.pop(0)
-                level.append(node.val)
+                level.add(node.val)
                 
                 if node.left:
                     queue.append(node.left)

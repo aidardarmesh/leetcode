@@ -9,34 +9,21 @@ class Node:
 """
 class Solution:
     def cloneGraph(self, node: 'Node') -> 'Node':
-        input_node = node
-        queue = [input_node]
-        new_nodes = {}
-        visited = set()
+        if not node:
+            return node
         
-        # creating new nodes
+        visited = {}
+        visited[node] = Node(node.val, [])
+        queue = [node]
+
         while queue:
-            node = queue.pop(0)
-            visited.add(node.val)
-            new_nodes[node.val] = Node(node.val, [])
-            
-            for neighbor in node.neighbors:
-                if not neighbor.val in visited:
+            n = queue.pop(0)
+
+            for neighbor in n.neighbors:
+                if not neighbor in visited:
+                    visited[neighbor] = Node(neighbor.val, [])
                     queue.append(neighbor)
+
+                visited[n].neighbors.append(visited[neighbor])
         
-        # adjusting neighbors
-        queue = [input_node]
-        visited = set()
-        
-        while queue:
-            node = queue.pop(0)
-            visited.add(node.val)
-            
-            for neighbor in node.neighbors:
-                if not new_nodes[neighbor.val] in new_nodes[node.val].neighbors:
-                    new_nodes[node.val].neighbors.append(new_nodes[neighbor.val])
-                
-                if not neighbor.val in visited:
-                    queue.append(neighbor)
-        
-        return new_nodes[input_node.val]
+        return visited[node]

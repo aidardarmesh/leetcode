@@ -8,52 +8,42 @@ class Solution:
         N = len(grid)
         M = len(grid[0])
         
-        uf = {}
-        self.islands = 0
+        islands = self.lands = 0
+        visited = {}
         
         for i in range(N):
             for j in range(M):
-                if grid[i][j] == "1":
-                    uf[i*M+j] = i*M+j
-                    self.islands += 1
+                if grid[i][j] == '1':
+                    visited[(i,j)] = False
+                    self.lands += 1
         
-        def get_item(i, j):
-            if i < 0 or i >= N or j < 0 or j >= M:
-                return "0"
+        def get_unvisited():
+            for key, val in visited.items():
+                if not val:
+                    return key
             
-            return grid[i][j]
+            return None
         
-        def find_set(v):
-            if v == uf[v]:
-                return v
+        def bfs(s):
+            queue = [s]
+            visited[s] = True
+            self.lands -= 1
             
-            uf[v] = find_set(uf[v])
-            return uf[v]
-        
-        def union_sets(u, v):
-            u_root = find_set(u)
-            v_root = find_set(v)
-            
-            if u_root != v_root:
-                uf[u_root] = v_root
-                self.islands -= 1
+            while queue:
+                i,j = queue.pop(0)
                 
-        for i in range(N):
-            for j in range(M):
-                if get_item(i, j) == "1":
-                    if get_item(i, j-1) == "1":
-                        union_sets(i*M+j, i*M+j-1)
-                    
-                    if get_item(i-1, j) == "1":
-                        union_sets(i*M+j, (i-1)*M+j)
-                    
-                    if get_item(i, j+1) == "1":
-                        union_sets(i*M+j, i*M+j+1)
-                    
-                    if get_item(i+1, j) == "1":
-                        union_sets(i*M+j, (i+1)*M+j)
+                for x,y in [(i+1,j),(i-1,j),(i,j+1),(i,j-1)]:
+                    if 0 <= x < N and 0 <= y < M:
+                        if grid[x][y] == '1' and not visited[(x,y)]:
+                            visited[(x,y)] = True
+                            self.lands -= 1
+                            queue.append((x,y))
         
-        return self.islands
+        while self.lands:
+            bfs(get_unvisited())
+            islands += 1
+        
+        return islands
 
 s = Solution()
 

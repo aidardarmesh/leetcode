@@ -2,6 +2,10 @@ from typing import *
 
 class Solution:
     def closedIsland(self, grid: List[List[int]]) -> int:
+        '''
+        Strategy is to "draw" lands. And if land touched border
+        it is not closed island
+        '''
         if not grid:
             return 0
         

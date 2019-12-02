@@ -6,31 +6,24 @@ class Solution:
         if not endWord in wordList or not endWord or not beginWord or not wordList:
             return 0
         
+        alphabet = 'abcdefghijklmnopqrstuvwxyz'
         L = len(beginWord)
-        all_combo_dict = defaultdict(list)
-        
-        for word in wordList:
-            for i in range(L):
-                int_word = word[:i] + '_' + word[i+1:]
-                all_combo_dict[int_word].append(word)
-        
-        visited = {beginWord: True}
-        queue = [(beginWord, 1)]
-        
+        dictionary = set(wordList)
+        visited = set([beginWord])
+        queue = [(beginWord, 0)]
+
         while queue:
-            cur_word, level = queue.pop(0)
-            
+            word, level = queue.pop(0)
+
+            if word == endWord:
+                return level + 1
+
             for i in range(L):
-                int_word = cur_word[:i] + '_' + cur_word[i+1:]
-                
-                for word in all_combo_dict[int_word]:
-                    if word == endWord:
-                        return level + 1
-                    
-                    if not word in visited:
-                        visited[word] = True
-                        queue.append((word, level+1))
-                
-                all_combo_dict[int_word] = []
+                for c in alphabet:
+                    inter_word = word[:i] + c + word[i+1:]
+
+                    if inter_word in dictionary and not inter_word in visited:
+                        queue.append((inter_word, level+1))
+                        visited.add(inter_word)
         
         return 0

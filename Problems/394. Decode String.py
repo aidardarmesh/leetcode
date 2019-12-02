@@ -2,23 +2,21 @@ from typing import *
 
 class Solution:
     def decodeString(self, s: str) -> str:
-        prev_digits, prev_chars = [], []
-        digits, chars = '', ''
-        
+        stack, cur_str, cur_num = [], '', ''
+
         for c in s:
-            if c.isnumeric():
-                digits += c
-            elif c.isalpha():
-                chars += c
-            elif c == '[':
-                prev_digits.append(digits)
-                digits = ''
-                prev_chars.append(chars)
-                chars = ''
+            if c == '[':
+                stack.append(cur_str)
+                stack.append(cur_num)
+                cur_num, cur_str = '', ''
             elif c == ']':
-                digits = int(prev_digits.pop())
-                chars = digits * chars
-                chars = prev_chars.pop() + chars
-                digits = ''
+                cur_num = int(stack.pop())
+                cur_str = cur_num * cur_str
+                cur_str = stack.pop() + cur_str
+                cur_num = ''
+            elif c.isdigit():
+                cur_num += c
+            else:
+                cur_str += c
         
-        return chars
+        return cur_str

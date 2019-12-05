@@ -2,11 +2,13 @@ from typing import *
 
 class Solution:
     def countBits(self, num: int) -> List[int]:
-        num += 1
-        ans = [0 for _ in range(num)]
+        def num_bits(num):
+            bits = 0
+            
+            while num:
+                bits += 1
+                num &= (num-1)
+            
+            return bits
         
-        for i in range(32):
-            for n in range(num):
-                ans[n] += ((n & (1 << i)) != 0)
-        
-        return ans
+        return [num_bits(i) for i in range(num+1)]

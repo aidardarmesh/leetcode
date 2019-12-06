@@ -1,27 +1,19 @@
 from typing import *
 
 class Solution:
-    def get_item(self, arr: List[int], index):
-        if index < 0 or index > len(arr)-1:
-            return 0
-        
-        return arr[index]
-
     def generate(self, numRows: int) -> List[List[int]]:
-        row = [1]
-        res = []
+        triangle = []
 
-        while numRows:
-            res.append(row)
-            new_row = []
+        for row_num in range(numRows):
+            row = [0 for _ in range(row_num+1)]
+            row[0] = row[-1] = 1
 
-            for i in range(len(row)+1):
-                new_row.append(self.get_item(row, i-1) + self.get_item(row, i))
+            for j in range(1, len(row)-1):
+                row[j] = triangle[row_num-1][j-1] + triangle[row_num-1][j]
             
-            row = new_row
-            numRows -= 1
+            triangle.append(row)
         
-        return res
+        return triangle
 
 s = Solution()
 

@@ -1,16 +1,20 @@
 from typing import *
 
 class Solution:
+    cache = {}
+    
     def fib(self, N: int) -> int:
-        nums = [0, 1]
-
-        if N < 2:
-            return nums[N]
-
-        for i in range(2, N+1):
-            nums.append(nums[i-2] + nums[i-1])
+        if N in self.cache:
+            return self.cache[N]
         
-        return nums.pop()
+        if N < 2:
+            result = N
+        else:
+            result = self.fib(N-1) + self.fib(N-2)
+        
+        self.cache[N] = result
+        
+        return result
 
 s = Solution()
 print(s.fib(2))

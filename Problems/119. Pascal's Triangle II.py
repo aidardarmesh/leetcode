@@ -3,17 +3,19 @@ from typing import *
 class Solution:
     def getRow(self, rowIndex: int) -> List[int]:
         row = [1]
+        temp = 0
         
-        while rowIndex:
-            first_row = row[:] + [0]
-            second_row = [0] + row[:]
-            row = []
+        for _ in range(rowIndex):
+            size = len(row)
             
-            for _ in range(len(first_row)):
-                row.append(first_row.pop(0) + second_row.pop(0))
+            for j in range(size):
+                popped = row.pop(0)
+                row.append(temp + popped)
+                temp = popped
             
-            rowIndex -= 1
-        
+            temp = 0
+            row.append(1)
+            
         return row
 
 s = Solution()

@@ -8,23 +8,22 @@ class ListNode:
 
 class Solution:
     def reverseList(self, head: ListNode) -> ListNode:
-        if head == None or head.next == None:
+        if not head:
             return head
         
-        last = self.reverseList(head.next)
-        head.next.next = head
-        head.next = None
-
-        return last
-
-    def print(self, head: ListNode):
-        cur = head
-
-        while cur != None:
-            print(cur.val, end=" ")
-            cur = cur.next
+        def helper(node):
+            if not node.next:
+                return node, node
+            
+            next_, new_head = helper(node.next)
+            next_.next = node
+            node.next = None
+            
+            return node, new_head
         
-        print()
+        head, new_head = helper(head)
+        
+        return new_head
 
 s = Solution()
 
@@ -38,4 +37,5 @@ nodeB.next = nodeC
 nodeC.next = nodeD
 nodeD.next = nodeE
 
-s.print(s.reverseList(nodeA))
+node = s.reverseList(nodeA)
+print(node.val)

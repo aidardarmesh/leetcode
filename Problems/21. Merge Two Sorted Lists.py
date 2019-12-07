@@ -8,25 +8,16 @@ class ListNode:
 
 class Solution:
     def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
-        head = dummy = ListNode(-1)
-
-        while l1 != None and l2 != None:
-            if l1.val <= l2.val:
-                dummy.next = l1
-                l1 = l1.next
-            else:
-                dummy.next = l2
-                l2 = l2.next
-            
-            dummy = dummy.next
-
-        if l1 != None:
-            dummy.next = l1
-
-        if l2 != None:
-            dummy.next = l2
-
-        return head.next
+        if not l1:
+            return l2
+        elif not l2:
+            return l1
+        elif l1.val <= l2.val:
+            l1.next = self.mergeTwoLists(l1.next, l2)
+            return l1
+        else:
+            l2.next = self.mergeTwoLists(l1, l2.next)
+            return l2
 
     def print(self, l: ListNode):
         while l != None:

@@ -2,10 +2,19 @@ from typing import *
 
 class Solution:
     def myPow(self, x: float, n: int) -> float:
-        if n == 0:
-            return 1
+        def fastPow(x, n):
+            if n == 0:
+                return 1.0
+            
+            half = fastPow(x, n // 2)
+
+            if n % 2 == 0:
+                return half * half
+            
+            return half * half * x
         
         if n < 0:
-            return 1 / self.myPow(x, abs(n))
+            x = 1.0 / x
+            n = -n
         
-        return x * self.myPow(x, n-1)
+        return fastPow(x, n)

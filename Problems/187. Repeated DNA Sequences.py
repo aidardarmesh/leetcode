@@ -2,19 +2,28 @@ from typing import *
 
 class Solution:
     def findRepeatedDnaSequences(self, s: str) -> List[str]:
-        L = 10
+        n, L = len(s), 10
         
-        if len(s) < L:
+        if n < L:
             return []
         
-        seq, ans = {}, []
+        a = 4
+        aL = a ** L
+        seen, ans = set(), set()
+        to_int = {'A':0,'C':1,'G':2,'T':3}
+        nums = [to_int.get(c) for c in s]
+        h = 0
         
-        for i in range(len(s)-L+1):
-            sub_str = s[i:i+L]
-            seq[sub_str] = seq.get(sub_str, 0) + 1
-        
-        for sub_str in seq:
-            if seq[sub_str] > 1:
-                ans.append(sub_str)
+        for i in range(n-L+1):
+            if i == 0:
+                for j in range(L):
+                    h = h*a + nums[j]
+            else:
+                h = h*a - nums[i-1] * aL + nums[i-1+L]
+            
+            if h in seen:
+                ans.add(s[i:i+L])
+            
+            seen.add(h)
         
         return ans

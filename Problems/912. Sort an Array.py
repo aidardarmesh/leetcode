@@ -19,12 +19,14 @@ class Solution:
         return res
     
     def sortArray(self, nums: List[int]) -> List[int]:
-        if len(nums) <= 1:
-            return nums
+        N = len(nums)
         
-        m = len(nums) // 2
+        for _ in range(N):
+            elem = nums.pop(0)
+            nums.append([elem])
         
-        left_list = self.sortArray(nums[:m])
-        right_list = self.sortArray(nums[m:])
+        while len(nums) > 1:
+            temp = self.merge(nums.pop(0), nums.pop(0))
+            nums.append(temp)
         
-        return self.merge(left_list, right_list)
+        return nums[0]

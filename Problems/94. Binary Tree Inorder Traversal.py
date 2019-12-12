@@ -12,7 +12,7 @@ class Solution:
         res = []
         stack = []
         node = root
-        
+
         while stack or node:
             if node:
                 stack.append(node)
@@ -21,7 +21,7 @@ class Solution:
                 node = stack.pop()
                 res.append(node.val)
                 node = node.right
-        
+
         return res
 
 node1 = TreeNode(1)

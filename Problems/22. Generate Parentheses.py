@@ -3,18 +3,19 @@ from typing import *
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
         res = []
+        queue = [('', 0, 0)]
         
-        def helper(s, n_open, n_closed):
+        while queue:
+            s, n_open, n_closed = queue.pop(0)
+            
             if n_open < n:
-                helper(s+'(', n_open+1, n_closed)
+                queue.append((s+'(', n_open+1, n_closed))
             
             if n_closed < n_open:
-                helper(s+')', n_open, n_closed+1)
+                queue.append((s+')', n_open, n_closed+1))
             
             if n_closed == n:
                 res.append(s)
-        
-        helper('', 0, 0)
         
         return res
 

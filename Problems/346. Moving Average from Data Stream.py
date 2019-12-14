@@ -3,16 +3,17 @@ from typing import *
 class MovingAverage:
 
     def __init__(self, size: int):
-        """
-        Initialize your data structure here.
-        """
         self.size = size
-        self.queue = []
+        self.data = [0] * size
+        self.head = self.window_sum = self.count = 0
 
     def next(self, val: int) -> float:
-        self.queue.append(val)
+        self.count += 1
+
+        tail = (self.head + 1) % self.size
+        self.window_sum = self.window_sum - self.data[tail] + val
+
+        self.head = (self.head + 1) % self.size
+        self.data[self.head] = val
         
-        if len(self.queue) > self.size:
-            item = self.queue.pop(0)
-        
-        return sum(self.queue)/len(self.size)
+        return self.window_sum / min(self.count, self.size)

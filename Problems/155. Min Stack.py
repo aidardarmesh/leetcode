@@ -3,25 +3,33 @@ from typing import *
 class MinStack:
 
     def __init__(self):
-        """
-        initialize your data structure here.
-        """
-        self.stack = []
+        self.data = []
+        self.size = 0
+    
+    def is_empty(self):
+        return self.size == 0
 
     def push(self, x: int) -> None:
-        self.stack.append(x)
+        min_ = self.getMin()
+        
+        if min_ is None or x < min_:
+            min_ = x
+        
+        self.data.append((x, min_))
+        self.size += 1
 
     def pop(self) -> None:
-        if len(self.stack):
-            self.stack.pop()
+        if not self.is_empty():
+            self.data.pop()
+            self.size -= 1
 
     def top(self) -> int:
-        if len(self.stack) > 0:
-            return self.stack[len(self.stack)-1]
+        if not self.is_empty():
+            return self.data[self.size-1][0]
 
     def getMin(self) -> int:
-        if len(self.stack) > 0:
-            return min(self.stack)
+        if not self.is_empty():
+            return self.data[self.size-1][1]
 
 
 m = MinStack()

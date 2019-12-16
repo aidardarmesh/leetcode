@@ -10,7 +10,7 @@ class Solution:
         
         for day, temp in enumerate(T):
             for prev_temp in weather:
-                if temp > prev_temp:
+                if prev_temp < temp:
                     while weather[prev_temp]:
                         prev_day = weather[prev_temp].pop()
                         ans[prev_day] = day - prev_day

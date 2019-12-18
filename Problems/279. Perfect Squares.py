@@ -21,18 +21,23 @@ class Solution:
             return cand
         
         root = sqrt(n)
-        squares = set([i**2 for i in range(root)])
+        squares = [i**2 for i in range(1, root+1)]
+        queue = {n}
+        level = 0
         
-        def is_divided_by(n, count):
-            if count == 1:
-                return n in squares
+        while queue:
+            level += 1
+            next_queue = set()
             
-            for k in squares:
-                if is_divided_by(n-k, count-1):
-                    return True
+            for remainder in queue:
+                for square in squares:
+                    if remainder == square:
+                        return level
+                    elif remainder < square:
+                        break
+                    else:
+                        next_queue.add(remainder-square)
             
-            return False
+            queue = next_queue
         
-        for count in range(1, n+1):
-            if is_divided_by(n, count):
-                return count
+        return level

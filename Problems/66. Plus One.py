@@ -8,18 +8,15 @@ class Solution:
             digit = digits.pop()
             digit += carry
 
-            if digit // 10 == 1:
-                digit = digit % 10
-                carry = 1
-            else:
-                carry = 0
+            carry = digit // 10
+            digit = digit % 10
             
-            res.insert(0, digit)
+            res.append(digit)
         
-        if carry > 0:
-            res.insert(0, carry)
+        if carry:
+            res.append(carry)
         
-        return res
+        return res[::-1]
 
 s = Solution()
 

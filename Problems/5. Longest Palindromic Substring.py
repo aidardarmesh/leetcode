@@ -2,29 +2,25 @@ from typing import *
 
 class Solution:
     def longestPalindrome(self, s: str) -> str:
-        queue = []
-        ans = ''
+        res = ''
         n = len(s)
         
-        # single-symbol palindromes
+        def helper(s, l, r):
+            while l >= 0 and r < n and s[l] == s[r]:
+                l -= 1
+                r += 1
+            
+            return s[l+1:r]
+        
         for i in range(n):
-            ans = s[i]
-            queue.append((s[i], i-1, i+1))
-        
-        # double-symbol palindromes
-        for i in range(n-1):
-            if s[i] == s[i+1]:
-                ans = s[i]+s[i+1]
-                queue.append((ans, i-1, i+2))
-        
-        while queue:
-            palind, left, right = queue.pop(0)
+            tmp = helper(s, i, i)
             
-            if left < 0 or right > n-1:
-                continue
+            if len(tmp) > len(res):
+                res = tmp
             
-            if s[left] == s[right]:
-                ans = s[left] + palind + s[right]
-                queue.append((ans, left-1, right+1))
+            tmp = helper(s, i, i+1)
+            
+            if len(tmp) > len(res):
+                res = tmp
         
-        return ans
+        return res

@@ -6,21 +6,13 @@ class NumMatrix:
         if not matrix:
             return
         
-        self.m = matrix
         n = len(matrix)
         m = len(matrix[0])
+        self.dp = [[0 for j in range(m+1)] for i in range(n+1)]
         
-        for i in range(n):
-            for j in range(1, m):
-                matrix[i][j] += matrix[i][j-1]
-        
-        print(self.m)
+        for i in range(1, n+1):
+            for j in range(1, m+1):
+                self.dp[i][j] = self.dp[i-1][j] + self.dp[i][j-1] + matrix[i-1][j-1] - self.dp[i-1][j-1]
 
     def sumRegion(self, row1: int, col1: int, row2: int, col2: int) -> int:
-        col1 -= 1
-        ans = 0
-        
-        for row in range(row1, row2+1):
-            ans += self.m[row][col2] - (self.m[row][col1] if col1 >= 0 else 0)
-        
-        return ans
+        return self.dp[row2+1][col2+1] - self.dp[row1][col2+1] - self.dp[row2+1][col1] + self.dp[row1][col1]

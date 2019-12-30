@@ -14,8 +14,6 @@ class Solution:
                 else:
                     dp[i][j] = max(dp[i-1][j], dp[i][j-1])
         
-        print(dp)
-        
         # backtrack to get shortest common subsequence
         ans = []
         

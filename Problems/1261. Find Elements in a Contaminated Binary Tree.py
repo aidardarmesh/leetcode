@@ -10,14 +10,13 @@ from typing import *
 class FindElements:
 
     def __init__(self, root: TreeNode):
-        self.root = root
+        self.values = set()
         
         if not root:
             return
         
         root.val = 0
         queue = [root]
-        self.values = set()
         
         while queue:
             node = queue.pop(0)

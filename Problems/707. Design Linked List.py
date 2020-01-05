@@ -4,6 +4,7 @@ class ListNode:
     def __init__(self, val: int):
         self.val = val
         self.next = None
+        self.prev = None
 
 class MyLinkedList:
     def __init__(self):
@@ -11,8 +12,10 @@ class MyLinkedList:
         Initialize your data structure here.
         """
         self.size = 0
-        # sentinel
         self.head = ListNode(0)
+        self.tail = ListNode(0)
+        self.head.next = self.tail
+        self.tail.prev = self.head
 
     def get(self, index: int) -> int:
         """
@@ -53,7 +56,7 @@ class MyLinkedList:
         
         if index < 0:
             index = 0
-        
+            
         self.size += 1
         prev = self.head
         
@@ -61,8 +64,12 @@ class MyLinkedList:
             prev = prev.next
         
         node = ListNode(val)
-        node.next = prev.next
+        
+        next = prev.next
+        node.prev = prev
+        node.next = next
         prev.next = node
+        next.prev = node
         
     def deleteAtIndex(self, index: int) -> None:
         """
@@ -72,9 +79,10 @@ class MyLinkedList:
             return
         
         self.size -= 1
-        prev = self.head
+        node = self.head
         
-        for _ in range(index):
-            prev = prev.next
+        for _ in range(index+1):
+            node = node.next
         
-        prev.next = prev.next.next
+        node.next.prev = node.prev
+        node.prev.next = node.next

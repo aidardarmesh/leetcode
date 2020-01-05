@@ -8,16 +8,12 @@ from typing import *
 
 class Solution:
     def hasCycle(self, head: ListNode) -> bool:
-        sent = ListNode(0)
-        sent.next = head
+        import sys
 
-        slow, fast = sent, head
-
-        while fast and fast.next:
-            if slow == fast:
+        while head:
+            if sys.getrefcount(head) > 4:
                 return True
-            
-            slow = slow.next
-            fast = fast.next.next
+
+            head = head.next
         
         return False

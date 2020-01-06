@@ -11,26 +11,28 @@ class Node:
 """
 class Solution:
     def flatten(self, head: 'Node') -> 'Node':
-        node = head
+        if not head:
+            return head
         
-        while node:
-            if node.child:
-                child = self.flatten(node.child)
-                node.child = None
-                next_ = node.next
-                
-                child.prev = node
-                node.next = child
-                
-                while child and child.next:
-                    child = child.next
-                
-                if next_:
-                    child.next = next_
-                    next_.prev = child
-                
-                node = child
+        pseudo_head = Node(None, None, head, None)
+        prev = pseudo_head
+        stack = [head]
+
+        while stack:
+            node = stack.pop()
+
+            prev.next = node
+            node.prev = prev
+
+            if node.next:
+                stack.append(node.next)
             
-            node = node.next
+            if node.child:
+                stack.append(node.child)
+                node.child = None
+
+            prev = node
         
-        return head
+        pseudo_head.next.prev = None
+
+        return pseudo_head.next

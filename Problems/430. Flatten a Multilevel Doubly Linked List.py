@@ -14,25 +14,23 @@ class Solution:
         if not head:
             return head
         
-        pseudo_head = Node(None, None, head, None)
-        prev = pseudo_head
-        stack = [head]
-
-        while stack:
-            node = stack.pop()
-
-            prev.next = node
-            node.prev = prev
-
-            if node.next:
-                stack.append(node.next)
-            
-            if node.child:
-                stack.append(node.child)
-                node.child = None
-
-            prev = node
+        node = head
+        stack = []
         
-        pseudo_head.next.prev = None
-
-        return pseudo_head.next
+        while node:
+            if node.child:
+                if node.next:
+                    stack.append(node.next)
+                
+                node.next = node.child
+                node.child.prev = node
+                node.child = None
+            
+            if not node.next and stack:
+                next_ = stack.pop()
+                node.next = next_
+                next_.prev = node
+            
+            node = node.next
+        
+        return head

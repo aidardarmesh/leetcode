@@ -8,26 +8,24 @@ from typing import *
 
 class Solution:
     def oddEvenList(self, head: ListNode) -> ListNode:
-        if not head:
-            return head
+        sent_odd = ListNode(0)
+        sent_even = ListNode(0)
+        odd = sent_odd
+        even = sent_even
+        is_odd = True
         
-        sent = ListNode(0)
-        sent.next = head
-        prev = sent
-        cur = head
-        cnt = 1
+        while head:
+            if is_odd:
+                odd.next = head
+                odd = odd.next
+            else:
+                even.next = head
+                even = even.next
+            
+            is_odd = not is_odd
+            head = head.next
         
-        while cur and cur.next:
-            prev.next = cur.next
-            prev = cur
-            cur = cur.next
-            cnt += 1
-
-        prev.next = cur.next
+        even.next = None
+        odd.next = sent_even.next
         
-        if cnt % 2 == 0:
-            prev.next = sent.next
-        else:
-            cur.next = sent.next
-        
-        return head
+        return sent_odd.next

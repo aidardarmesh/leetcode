@@ -1,11 +1,18 @@
 from typing import *
-import heapq, collections
 
 class Solution:
     def frequencySort(self, s: str) -> str:
-        return "".join(letter*count for letter, count in collections.Counter(s).most_common())
-
-s = Solution()
-
-assert s.frequencySort("tree") == "eetr"
-assert s.frequencySort("cccaaa") == "cccaaa"
+        import heapq
+        
+        heap = []
+        ans = []
+        cnt = collections.Counter(s)
+        
+        for char, num in cnt.items():
+            heapq.heappush(heap, (-num, char))
+        
+        for _ in range(len(heap)):
+            num, char = heapq.heappop(heap)
+            ans.append(char*(-num))
+        
+        return ''.join(ans)

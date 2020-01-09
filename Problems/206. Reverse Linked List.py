@@ -11,19 +11,15 @@ class Solution:
         if not head:
             return head
         
-        def helper(node):
-            if not node.next:
-                return node, node
-            
-            next_, new_head = helper(node.next)
-            next_.next = node
-            node.next = None
-            
-            return node, new_head
+        node = head
+
+        while node and node.next:
+            next_ = node.next
+            node.next = next_.next
+            next_.next = head
+            head = next_
         
-        head, new_head = helper(head)
-        
-        return new_head
+        return head
 
 s = Solution()
 

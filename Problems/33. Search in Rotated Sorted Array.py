@@ -10,25 +10,22 @@ class Solution:
             
             if nums[mid] == target:
                 return mid
-            # logically, we need to go left
             elif nums[mid] > target:
-                # target in left if
-                # a. it fits left side
-                #    or
-                # b. no place in right side
+                # target should be in right side
+                # we can go right if
+                # a. if target fits right side
+                # b. it doesn't fit left side
                 if target >= nums[left] or nums[mid] <= nums[right]:
                     right = mid-1
                 else:
                     left = mid+1
             elif nums[mid] < target:
-                # target in right if
-                # a. it fits in right side
-                #    or
-                # b. no place in left side
+                # target should be in left side
+                # we can go left if
+                # a. if it fits left side
+                # b. it doesn't fit right side
                 if target <= nums[right] or nums[left] <= nums[mid]:
                     left = mid+1
-                # all value in right side are less than target
-                # therefore, go left
                 else:
                     right = mid-1
         

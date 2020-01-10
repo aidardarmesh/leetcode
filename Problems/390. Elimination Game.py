@@ -10,7 +10,6 @@ class Solution:
             if left or n % 2 == 1:
                 head += step
             
-            
             step *= 2
             n //= 2
             left = not left

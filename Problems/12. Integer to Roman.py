@@ -2,6 +2,9 @@ from typing import *
 
 class Solution:
     def intToRoman(self, num: int) -> str:
+        if not num:
+            return ''
+        
         denoms = {
             1000: 'M',
             900: 'CM',

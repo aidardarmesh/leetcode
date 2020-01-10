@@ -10,27 +10,22 @@ from typing import *
 
 class Solution:
     def findDuplicateSubtrees(self, root: TreeNode) -> List[TreeNode]:
-        def serialize(root):
+        cnt = collections.defaultdict(int)
+        ans = []
+        
+        def collect(root):
             if not root:
-                return 'None,'
+                return '#,'
             
-            return str(root.val) + ',' + serialize(root.left) + serialize(root.right)
-        
-        serial_cnt = {}
-        serial_node = {}
-        
-        def find(root):
-            if not root:
-                return None
+            serial = str(root.val) + ',' + collect(root.left) + collect(root.right)
             
-            root_serial = serialize(root)
+            cnt[serial] += 1
             
-            serial_cnt[root_serial] = serial_cnt.get(root_serial, 0) + 1
-            serial_node[root_serial] = root
+            if cnt[serial] == 2:
+                ans.append(root)
             
-            find(root.left)
-            find(root.right)
+            return serial
         
-        find(root)
+        collect(root)
         
-        return [serial_node[serial] for serial, cnt in serial_cnt.items() if cnt > 1]
+        return ans

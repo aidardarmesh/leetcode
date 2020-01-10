@@ -10,39 +10,27 @@ from typing import *
 
 class Solution:
     def findDuplicateSubtrees(self, root: TreeNode) -> List[TreeNode]:
-        if not root:
-            return []
-        
-        d = {}
-        
         def serialize(root):
             if not root:
-                return 'X,'
+                return 'None,'
             
             return str(root.val) + ',' + serialize(root.left) + serialize(root.right)
         
-        stack = [root]
+        serial_cnt = {}
+        serial_node = {}
         
-        while stack:
-            node = stack.pop()
-            serial = serialize(node)
+        def find(root):
+            if not root:
+                return None
             
-            if serial in d:
-                d[serial].append(node)
-            else:
-                d[serial] = [node]
+            root_serial = serialize(root)
             
-            if node.right:
-                stack.append(node.right)
+            serial_cnt[root_serial] = serial_cnt.get(root_serial, 0) + 1
+            serial_node[root_serial] = root
             
-            if node.left:
-                stack.append(node.left)
+            find(root.left)
+            find(root.right)
         
-        res = []
+        find(root)
         
-        for lst_node in d.values():
-            if len(lst_node) >= 2:
-                res.append(lst_node.pop())
-        
-        return res
-        
+        return [serial_node[serial] for serial, cnt in serial_cnt.items() if cnt > 1]

@@ -2,18 +2,9 @@ from typing import *
 
 class Solution:
     def climbStairs(self, n: int) -> int:
-        cache = {0:1}
+        f1, f2 = 0, 1
+
+        for _ in range(n):
+            f1, f2 = f2, f1+f2
         
-        def helper(n):
-            if n in cache:
-                return cache[n]
-
-            if n < 0:
-                return 0
-
-            result = helper(n-1) + helper(n-2)
-            cache[n] = result
-
-            return result
-        
-        return helper(n)
+        return f2

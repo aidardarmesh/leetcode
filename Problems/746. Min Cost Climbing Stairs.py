@@ -2,9 +2,11 @@ from typing import *
 
 class Solution:
     def minCostClimbingStairs(self, cost: List[int]) -> int:
-        f1, f2 = cost[0], cost[1]
+        dp = cost[:]
+        dp.append(0)
+        n = len(cost)
         
-        for i in range(2, len(cost)):
-            f1, f2 = f2, min(f1, f2) + cost[i]
+        for i in range(2, n+1):
+            dp[i] = min(dp[i-1], dp[i-2]) + (cost[i] if i != n else 0)
         
-        return min(f1, f2)
+        return dp[n]

@@ -10,12 +10,9 @@ class TreeNode:
 class Solution:
     def postorderTraversal(self, root: TreeNode) -> List[int]:
         if not root:
-            return
-        
-        result = []
-        stack = []
-        visited = set()
-        node = root
+            return []
+
+        res, stack, visited, node = [], [], set(), root
 
         while stack or node:
             if node:
@@ -28,11 +25,11 @@ class Solution:
                     stack.append(node)
                     node = node.right
                 else:
-                    result.append(node.val)
+                    res.append(node.val)
                     visited.add(node)
                     node = None
         
-        return result
+        return res
 
 node1 = TreeNode(1)
 node2 = TreeNode(2)

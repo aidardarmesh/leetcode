@@ -12,24 +12,26 @@ class Solution:
         if not root:
             return []
 
-        res = []
-        queue = [root]
+        from collections import deque
+        
+        res, deq = [], deque()
+        deq.append(root)
 
-        while queue:
-            level, size = [], len(queue)
+        while deq:
+            size, level = len(deq), []
 
-            for i in range(size):
-                node = queue.pop(0)
+            for _ in range(size):
+                node = deq.popleft()
                 level.append(node.val)
 
                 if node.left:
-                    queue.append(node.left)
+                    deq.append(node.left)
                 
                 if node.right:
-                    queue.append(node.right)
+                    deq.append(node.right)
             
             res.append(level)
-
+        
         return res
 
 s = Solution()

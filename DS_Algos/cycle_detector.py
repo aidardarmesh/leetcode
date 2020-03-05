@@ -44,9 +44,23 @@ class CycleDetector:
             print('Cycle')
             ans = []
             while self.cycle_start != self.cycle_end:
-                ans.insert(0, cycle_end)
+                ans.insert(0, self.cycle_end)
                 self.cycle_end = self.parent[self.cycle_end]
             ans.insert(0, self.cycle_start)
 
         print(ans)
 
+# directed
+graph = {
+    0: [],
+    1: [0,3],
+    2: [0],
+    3: [4,5],
+    4: [5,7],
+    5: [6],
+    6: [7],
+    7: [5],
+}
+
+cd = CycleDetector(8)
+cd.detect(graph)

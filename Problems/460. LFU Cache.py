@@ -56,7 +56,6 @@ class LFUCache:
             node = self.map[key]
             node.val = value
             node.cnt += 1
-            self._up(node)
         else:
             node = Node(key, value)
             self.map[key] = node
@@ -75,6 +74,8 @@ class LFUCache:
             node.prev = pre_tail
             node.next = self.tail
             self.tail.prev = node
+        
+        self._up(node)
 
 cache = LFUCache(2)
 cache.put(1,1)
@@ -87,3 +88,19 @@ cache.put(4,4)
 assert cache.get(1) == -1
 assert cache.get(3) == 3
 assert cache.get(4) == 4
+
+cache = LFUCache(3)
+cache.put(1,1)
+cache.put(2,2)
+cache.put(3,3)
+cache.put(4,4)
+assert cache.get(4) == 4
+assert cache.get(3) == 3
+assert cache.get(2) == 2
+assert cache.get(1) == -1
+cache.put(5,5)
+assert cache.get(1) == -1
+assert cache.get(2) == 2
+assert cache.get(3) == 3
+assert cache.get(4) == -1
+assert cache.get(5) == 5

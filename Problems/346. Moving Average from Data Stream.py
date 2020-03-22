@@ -3,17 +3,15 @@ from typing import *
 class MovingAverage:
 
     def __init__(self, size: int):
+        from collections import deque
+        
         self.size = size
-        self.data = [0] * size
-        self.head = self.window_sum = self.count = 0
+        self.deq = deque()
 
     def next(self, val: int) -> float:
-        self.count += 1
-
-        tail = (self.head + 1) % self.size
-        self.window_sum = self.window_sum - self.data[tail] + val
-
-        self.head = (self.head + 1) % self.size
-        self.data[self.head] = val
+        if len(self.deq) == self.size:
+            self.deq.popleft()
         
-        return self.window_sum / min(self.count, self.size)
+        self.deq.append(val)
+        
+        return sum(self.deq) / len(self.deq)

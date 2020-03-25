@@ -1,17 +1,15 @@
-from typing import Any
-
 class Builder:
     """
     The Builder interface specifies methods for creating the different parts of
     the Product objects.
     """
-    def produce_part_a(self) -> None:
+    def produce_part_a(self):
         pass
 
-    def produce_part_b(self) -> None:
+    def produce_part_b(self):
         pass
 
-    def produce_part_c(self) -> None:
+    def produce_part_c(self):
         pass
 
 
@@ -21,19 +19,19 @@ class ConcreteBuilder1(Builder):
     specific implementations of the building steps. Your program may have
     several variations of Builders, implemented differently.
     """
-    def __init__(self) -> None:
+    def __init__(self):
         self.reset()
     
-    def reset(self) -> None:
+    def reset(self):
         self._product = Product1()
     
-    def produce_part_a(self) -> None:
+    def produce_part_a(self):
         self._product.add("PartA1")
 
-    def produce_part_b(self) -> None:
+    def produce_part_b(self):
         self._product.add("PartB1")
     
-    def produce_part_c(self) -> None:
+    def produce_part_c(self):
         self._product.add("PartC1")
 
 
@@ -42,13 +40,13 @@ class Product1:
     It makes sense to use the Builder pattern only when your products are quite
     complex and require extensive configuration.
     """
-    def __init__(self) -> None:
+    def __init__(self):
         self._parts = []
     
-    def add(self, part: Any) -> None:
+    def add(self, part):
         self._parts.append(part)
     
-    def list_parts(self) -> None:
+    def list_parts(self):
         print(', '.join(self._parts))
 
 
@@ -58,19 +56,19 @@ class Director:
     particular sequence. It is helpful when producing products according to a
     specific order or configuration, therefore optional.
     """
-    def __init__(self) -> None:
+    def __init__(self):
         self._builder = None
     
-    def set_builder(self, builder: Builder) -> None:
+    def set_builder(self, builder: Builder):
         self._builder = builder
     
-    def get_builder(self) -> Builder:
+    def get_builder(self):
         return self._builder
     
-    def build_mvp(self) -> None:
+    def build_mvp(self):
         self._builder.produce_part_a()
     
-    def build_full(self) -> None:
+    def build_full(self):
         self._builder.produce_part_a()
         self._builder.produce_part_b()
         self._builder.produce_part_c()

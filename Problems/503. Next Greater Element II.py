@@ -2,21 +2,26 @@ from typing import *
 
 class Solution:
     def nextGreaterElements(self, nums: List[int]) -> List[int]:
-        res = []
+        prev = []
+        res = [0]*len(nums)
         
-        for i in range(len(nums)):
+        for i in range(2*len(nums)-1, -1, -1):
+            i = i % len(nums)
             found = False
-            j = (i + 1) % len(nums)
             
-            while i != j:
-                if nums[i] < nums[j]:
-                    res.append(nums[j])
+            while prev:
+                if nums[prev[-1]] > nums[i]:
+                    res[i] = nums[prev[-1]]
                     found = True
                     break
                 
-                j = (j + 1) % len(nums)
+                prev.pop()
+            
+            prev.append(i)
             
             if not found:
-                res.append(-1)
+                res[i] = -1
+                continue
         
         return res
+        

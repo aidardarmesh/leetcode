@@ -1,81 +1,96 @@
 from typing import *
+from collections import defaultdict
 
 class Node:
 
     def __init__(self, key, val):
         self.key = key
         self.val = val
-        self.cnt = 0
+        self.freq = 0
         self.prev = None
         self.next = None
+
+
+class DLL:
+
+    def __init__(self):
+        self._head = Node(-1, -1)
+        self._tail = Node(-1, -1)
+        self._head.next = self._tail
+        self._tail.prev = self._head
+        self._size = 0
+
+    def __len__(self):
+        return self._size
+    
+    def appendleft(self, node):
+        node.next = self._head.next
+        node.prev = self._head
+        node.next.prev = node
+        self._head.next = node
+        self._size += 1
+
+    def pop(self, node=None):
+        if not self._size:
+            return
+        
+        if not node:
+            node = self._tail.prev
+        
+        node.prev.next = node.next
+        node.next.prev = node.prev
+        self._size -= 1
+
+        return node
+
 
 class LFUCache:
 
     def __init__(self, capacity: int):
-        self.map = {}
-        self.cap = capacity
-        self.size = 0
-        self.head = Node(-1, -1)
-        self.head.cnt = float('inf')
-        self.tail = Node(-1, -1)
-        self.tail.cnt = float('-inf')
-        self.head.next = self.tail
-        self.tail.prev = self.head
+        self._node = {}
+        self._freq = defaultdict(DLL)
+        self._minfreq = 0
+        self._capacity = capacity
+        self._size = 0
     
-    def _up(self, node):
-        prev = node.prev
+    def _update(self, node):
+        freq = node.freq
+        self._freq[freq].pop(node)
 
-        while prev and prev.cnt <= node.cnt:
-            prev = prev.prev
+        if self._minfreq == freq and not self._freq[freq]:
+            self._minfreq += 1
         
-        # deleting node from current position
-        node.prev.next = node.next
-        node.next.prev = node.prev
+        node.freq += 1
+        self._freq[node.freq].appendleft(node)
 
-        # inserting after prev
-        node.next = prev.next
-        node.prev = prev
-        prev.next = node
-        node.next.prev = node
-
-    def get(self, key: int) -> int:
-        if not key in self.map:
+    def get(self, key):
+        if not key in self._node:
             return -1
         
-        node = self.map[key]
-        node.cnt += 1
-        self._up(node)
-
+        node = self._node[key]
+        self._update(node)
         return node.val
 
-    def put(self, key: int, value: int) -> None:
-        if self.cap <= 0:
+    def put(self, key, value):
+        if self._capacity == 0:
             return
         
-        if key in self.map:
-            node = self.map[key]
+        if key in self._node:
+            node = self._node[key]
+            self._update(node)
             node.val = value
-            node.cnt += 1
         else:
-            node = Node(key, value)
-            self.map[key] = node
-            node.cnt += 1
-            self.size += 1
-
-            if self.cap < self.size:
-                pre_tail = self.tail.prev
-                pre_tail.prev.next = self.tail
-                self.tail.prev = pre_tail.prev
-                del self.map[pre_tail.key]
-                self.size -= 1
+            if self._size == self._capacity:
+                node = self._freq[self._minfreq].pop()
+                del self._node[node.key]
+                self._size -= 1
             
-            pre_tail = self.tail.prev
-            pre_tail.next = node
-            node.prev = pre_tail
-            node.next = self.tail
-            self.tail.prev = node
-        
-        self._up(node)
+            node = Node(key, value)
+            self._node[key] = node
+            self._freq[1].appendleft(node)
+            self._minfreq = 1
+            self._size += 1
+
 
 cache = LFUCache(2)
 cache.put(1,1)

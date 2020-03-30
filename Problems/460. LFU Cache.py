@@ -6,7 +6,7 @@ class Node:
     def __init__(self, key, val):
         self.key = key
         self.val = val
-        self.freq = 0
+        self.freq = 1
         self.prev = None
         self.next = None
 

@@ -15,8 +15,10 @@ class Codec:
         return str(root.val) + ',' + self.serialize(root.left) + self.serialize(root.right)
         
     def deserialize(self, data):
+        from collections import deque
+        
         def helper(data):
-            val = data.pop(0)
+            val = data.popleft()
             
             if val == 'None':
                 return None
@@ -27,4 +29,4 @@ class Codec:
             
             return node
         
-        return helper(data.split(','))
+        return helper(deque(data.split(',')))

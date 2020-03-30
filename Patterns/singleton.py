@@ -2,7 +2,7 @@ class Singleton:
     __instance = None
 
     def __init__(self):
-        if not Singleton.__instance:
+        if Singleton.__instance:
             raise Exception("This is Singleton!")
 
         Singleton.__instance = self

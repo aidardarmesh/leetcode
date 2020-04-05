@@ -2,15 +2,13 @@ from typing import *
 
 class Solution:
     def scoreOfParentheses(self, S: str) -> int:
-        ans = depth = 0
+        stack = [0]
         
-        for i, c in enumerate(S):
+        for c in S:
             if c == '(':
-                depth += 1
+                stack.append(0)
             else:
-                depth -= 1
-                
-                if S[i-1] == '(':
-                    ans += 2 ** depth
+                v = stack.pop()
+                stack[-1] += max(v*2, 1)
         
-        return ans
+        return stack.pop()

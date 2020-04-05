@@ -11,6 +11,6 @@ class Solution:
                 depth -= 1
                 
                 if S[i-1] == '(':
-                    ans += 1 << depth
+                    ans += 2 ** depth
         
         return ans

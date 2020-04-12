@@ -2,16 +2,16 @@ from typing import *
 
 class Solution:
     def dominantIndex(self, nums: List[int]) -> int:
-        max_index = -1
+        max_idx = -1
         max_val = float('-inf')
         
-        for i, val in enumerate(nums):
-            if val > max_val:
-                max_index = i
-                max_val = val
+        for i in range(len(nums)):
+            if nums[i] > max_val:
+                max_idx = i
+                max_val = nums[i]
         
-        for i, val in enumerate(nums):
-            if i != max_index and val * 2 > max_val:
+        for i in range(len(nums)):
+            if i != max_idx and (nums[i] << 1) > max_val:
                 return -1
         
-        return max_index
+        return max_idx

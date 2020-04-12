@@ -2,21 +2,17 @@ from typing import *
 
 class Solution:
     def plusOne(self, digits: List[int]) -> List[int]:
-        res, carry = [], 1
-
-        while digits:
-            digit = digits.pop()
-            digit += carry
-
-            carry = digit // 10
-            digit = digit % 10
-            
-            res.append(digit)
+        carry = 1
+        
+        for i in range(len(digits)-1, -1, -1):
+            val = digits[i] + carry
+            digits[i] = val % 10
+            carry = val // 10
         
         if carry:
-            res.append(carry)
+            return [1] + digits
         
-        return res[::-1]
+        return digits
 
 s = Solution()
 

@@ -2,26 +2,33 @@ from typing import *
 
 class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
-        res = ""
-
-        if not strs:
-            return res
-
-        chars = list(strs[0])
-        i = 0
-
-        for char in chars:
-            for str in strs:
-                if len(str) > i and str[i] == char:
-                    continue
-                else:
-                    return res
-            
-            res += char
-            i += 1
+        root = {}
+        min_len = float('inf')
         
-        return res
-
+        def insert(node, word):
+            for c in word:
+                if not c in node:
+                    node[c] = {}
+                
+                node = node[c]
+        
+        for word in strs:
+            min_len = min(min_len, len(word))
+            insert(root, word)
+        
+        ans = []
+        
+        def traverse(node, ans, depth):
+            if not depth or len(node) != 1:
+                return ans
+            
+            for c in node:
+                ans.append(c)
+                traverse(node[c], ans, depth-1)
+            
+            return ans
+        
+        return ''.join(traverse(root, ans, min_len))
 
 s = Solution()
 

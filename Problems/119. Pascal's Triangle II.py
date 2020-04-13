@@ -2,20 +2,18 @@ from typing import *
 
 class Solution:
     def getRow(self, rowIndex: int) -> List[int]:
-        row = [1]
-        temp = 0
+        from collections import deque
         
-        for _ in range(rowIndex):
+        row = deque([1])
+        
+        for i in range(rowIndex):
             size = len(row)
             
-            for j in range(size):
-                popped = row.pop(0)
-                row.append(temp + popped)
-                temp = popped
+            for j in range(size-1):
+                row[j] += row[j+1]
             
-            temp = 0
-            row.append(1)
-            
+            row.appendleft(1)
+        
         return row
 
 s = Solution()

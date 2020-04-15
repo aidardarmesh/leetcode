@@ -8,12 +8,26 @@ from typing import *
 
 class Solution:
     def detectCycle(self, head: ListNode) -> ListNode:
-        while head:
-            try:
-                if head.seen:
-                    return head
-            except:
-                head.seen = 1
-                head = head.next
+        def get_intersection(slow, fast):
+            while fast and fast.next:
+                slow = slow.next
+                fast = fast.next.next
+                
+                if slow == fast:
+                    return slow
+            
+            return None
         
-        return None
+        intersection = get_intersection(head, head)
+        
+        if not intersection:
+            return None
+        
+        ptr1 = head
+        ptr2 = intersection
+        
+        while ptr1 != ptr2:
+            ptr1 = ptr1.next
+            ptr2 = ptr2.next
+        
+        return ptr1

@@ -8,6 +8,11 @@ from typing import *
 
 class Solution:
     def detectCycle(self, head: ListNode) -> ListNode:
+        '''
+        1. Find the intersection first with slow and fast pointers
+        2. Move with equal speed to find entrance
+        '''
+
         def get_intersection(slow, fast):
             while fast and fast.next:
                 slow = slow.next

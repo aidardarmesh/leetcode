@@ -12,6 +12,9 @@ class Solution:
                 i += 1
                 j += 1
             
+            if len(first[i:]) > 0:
+                raise Exception()
+            
             return None
         
         ans = []
@@ -19,7 +22,11 @@ class Solution:
         alphabet = set(words[0])
         
         for i in range(len(words)-1):
-            edge = helper(words[i], words[i+1])
+            try:
+                edge = helper(words[i], words[i+1])
+            except:
+                return ''
+            
             alphabet = alphabet.union(set(words[i+1]))
             
             if edge:

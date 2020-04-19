@@ -3,27 +3,29 @@ from typing import *
 class Solution:
     def findCircleNum(self, M: List[List[int]]) -> int:
         N = len(M)
-        self.circles = N
-        uf = {x:x for x in range(N)}
+        visited = {i:False for i in range(N)}
+        graph = {i:set() for i in range(N)}
+        circles = 0
         
-        def find_set(v):
-            if v == uf[v]:
-                return v
-            
-            uf[v] = find_set(uf[v])
-            return uf[v]
-        
-        def union_sets(u,v):
-            u = find_set(u)
-            v = find_set(v)
-            
-            if u != v:
-                uf[u] = v
-                self.circles -= 1
-                
         for i in range(N):
             for j in range(N):
                 if M[i][j]:
-                    union_sets(i, j)
+                    graph[i].add(j)
+                    graph[j].add(i)
         
-        return self.circles
+        def dfs(v):
+            if visited[v]:
+                return
+            
+            visited[v] = True
+            
+            for to in graph[v]:
+                if not visited[to]:
+                    dfs(to)
+        
+        for v in graph:
+            if not visited[v]:
+                dfs(v)
+                circles += 1
+        
+        return circles

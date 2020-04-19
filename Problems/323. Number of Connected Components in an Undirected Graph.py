@@ -2,29 +2,26 @@ from typing import *
 
 class Solution:
     def countComponents(self, n: int, edges: List[List[int]]) -> int:
-        from collections import defaultdict
+        uf = {i:i for i in range(n)}
+        self.cnt = n
         
-        graph = defaultdict(list)
-        visited = {i:False for i in range(n)}
-        cnt = 0
+        def find_set(v):
+            if v == uf[v]:
+                return v
+            
+            uf[v] = find_set(uf[v])
+            
+            return uf[v]
+        
+        def union_sets(u,v):
+            u = find_set(u)
+            v = find_set(v)
+            
+            if u != v:
+                uf[v] = u
+                self.cnt -= 1
         
         for u, v in edges:
-            graph[u].append(v)
-            graph[v].append(u)
+            union_sets(u,v)
         
-        def dfs(v):
-            if visited[v]:
-                return
-            
-            visited[v] = True
-            
-            for to in graph[v]:
-                if not visited[to]:
-                    dfs(to)
-        
-        for i in range(n):
-            if not visited[i]:
-                dfs(i)
-                cnt += 1
-        
-        return cnt
+        return self.cnt

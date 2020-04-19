@@ -26,7 +26,7 @@ def union_sets_rank(u, v):
     u_root = find_set(u)
     v_root = find_set(v)
 
-    if u_root != v_root:
+    if u_root == v_root:
         return
     
     if rank[u_root] < rank[v_root]:
@@ -41,7 +41,7 @@ def union_sets_size(u, v):
     u_root = find_set(u)
     v_root = find_set(v)
 
-    if u_root != v_root:
+    if u_root == v_root:
         return
     
     if size[u_root] < size[v_root]:

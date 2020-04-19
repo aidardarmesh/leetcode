@@ -2,15 +2,18 @@ from typing import *
 
 class Solution:
     def canVisitAllRooms(self, rooms: List[List[int]]) -> bool:
-        queue = [0]
-        visited = {0}
+        visited = {}
         
-        while queue:
-            i = queue.pop(0)
+        def dfs(v):
+            if v in visited:
+                return
             
-            for next_ in rooms[i]:
-                if not next_ in visited:
-                    queue.append(next_)
-                    visited.add(next_)
+            visited[v] = True
+            
+            for to in rooms[v]:
+                if not to in visited:
+                    dfs(to)
         
-        return len(visited) == len(rooms)
+        dfs(0)
+        
+        return len(rooms) == len(visited)

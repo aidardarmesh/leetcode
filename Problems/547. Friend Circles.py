@@ -6,29 +6,19 @@ class Solution:
         
         N = len(M)
         visited = {i:False for i in range(N)}
-        graph = {i:set() for i in range(N)}
         circles = 0
         
         for i in range(N):
-            for j in range(N):
-                if M[i][j]:
-                    graph[i].add(j)
-                    graph[j].add(i)
-        
-        def bfs(v):
-            deq = deque(graph[v])
-            
-            while deq:
-                neigh = deq.popleft()
-                
-                for to in graph[neigh]:
-                    if not visited[to]:
-                        visited[to] = True
-                        deq.append(to)
-        
-        for v in graph:
-            if not visited[v]:
-                bfs(v)
+            if not visited[i]:
+                deq = deque([i])
                 circles += 1
+                
+                while deq:
+                    i = deq.popleft()
+                    visited[i] = True
+                    
+                    for j in range(N):
+                        if M[i][j] and not visited[j]:
+                            deq.append(j)
         
         return circles

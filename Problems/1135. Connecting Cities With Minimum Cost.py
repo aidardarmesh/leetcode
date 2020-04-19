@@ -2,6 +2,8 @@ from typing import *
 
 class Solution:
     def minimumCost(self, N: int, connections: List[List[int]]) -> int:
+        from collections import deque
+        
         uf = {i:i for i in range(1, N+1)}
         connections.sort(key=lambda x: x[2])
         total = 0
@@ -13,8 +15,6 @@ class Solution:
             uf[v] = find_set(uf[v])
             
             return uf[v]
-        
-        from collections import defaultdict, deque
         
         graph = {i:[] for i in range(1,N+1)}
         visited = {i:False for i in range(1,N+1)}

@@ -5,9 +5,11 @@ class Solution:
         n = len(nums)
         dp = [False]*n
         dp[n-1] = True
+        last_good_idx = n-1
         
         for i in range(n-1, -1, -1):
-            for j in range(i+1, min(i+1+nums[i], n)):
-                dp[i] |= dp[j]
+            if nums[i] >= last_good_idx-i:
+                dp[i] = True
+                last_good_idx = i
         
         return dp[0]

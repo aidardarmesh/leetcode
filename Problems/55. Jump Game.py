@@ -3,18 +3,11 @@ from typing import *
 class Solution:
     def canJump(self, nums: List[int]) -> bool:
         n = len(nums)
+        dp = [False]*n
+        dp[n-1] = True
         
-        from collections import deque
+        for i in range(n-1, -1, -1):
+            for j in range(i+1, min(i+1+nums[i], n)):
+                dp[i] |= dp[j]
         
-        deq = deque([0])
-        
-        while deq:
-            idx = deq.popleft()
-            
-            if idx == n-1:
-                return True
-            
-            for delta in range(1, nums[idx]+1):
-                deq.append(idx + delta)
-        
-        return False
+        return dp[0]

@@ -2,6 +2,8 @@ from typing import *
 
 class Solution:
     def findCircleNum(self, M: List[List[int]]) -> int:
+        from collections import deque
+        
         N = len(M)
         visited = {i:False for i in range(N)}
         graph = {i:set() for i in range(N)}
@@ -13,19 +15,20 @@ class Solution:
                     graph[i].add(j)
                     graph[j].add(i)
         
-        def dfs(v):
-            if visited[v]:
-                return
+        def bfs(v):
+            deq = deque(graph[v])
             
-            visited[v] = True
-            
-            for to in graph[v]:
-                if not visited[to]:
-                    dfs(to)
+            while deq:
+                neigh = deq.popleft()
+                
+                for to in graph[neigh]:
+                    if not visited[to]:
+                        visited[to] = True
+                        deq.append(to)
         
         for v in graph:
             if not visited[v]:
-                dfs(v)
+                bfs(v)
                 circles += 1
         
         return circles
